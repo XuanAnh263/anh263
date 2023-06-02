@@ -37,7 +37,7 @@
                     <div class="form-group">
                         <label for="level">Level</label>
                         <select name="level" id="level" th:field="*{level}" class="form-control">
-                            <option th:each="level : ${T(com.example.homework_driver_2.statics.Level).values()}"
+                            <option th:each="level : ${T(com.example.transportation_management_js.statics.Level).values()}"
                                     th:value="${level}" th:text="${level.name}"></option>
                         </select>
                     </div>
