@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        body {
+            text-align: center;
+        }
+        .active {
+            color: red;
+            text-decoration: line-through;
+        }
+
+        span {
+            margin: 10px 20px;
+        }
+        button {
+            margin: 10px 10px;
+        }
+        input{
+            margin: 10px 10px;
+        }
+    </style>
+</head>
+<body>
+<h2>Todo Application</h2>
+
+<input type="text" placeholder="Enter title" id="todoInput">
+<button id="btn-add">Add</button>
+
+<ul>
+    <li th:each="todo: ${TodoList}" th:id="|id-${todo.id}|">
+        <input type="checkbox" th:checked="${todo.status}">
+        <span th:text="${todo.title}" th:class="${todo.status} ? 'active' : ''">Todo 1</span>
+        <button th:onclick="|editTodo(${todo.id})|">Edit</button>
+        <button th:onclick="|deleteTodo(${todo.id})|">Delete</button>
+    </li>
+</ul>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+
+<script th:inline="javascript">
+    //delete
+    function deleteTodo(id) {
+        const isConfirm = window.confirm("Ban co muon xoa hay ko?")
+        if (isConfirm) {
+            $.ajax({
+                    url: "/api/v1/todos/" + id,
+                    type: "DELETE",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (res) {
+                        $(`#id-${id}`).remove();
+                        alert("Xoa thanh cong")
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                }
+            )
+        }
+    }
+
+    //add
+    $('#btn-add').click(function () {
+        //lay noi dung trong input
+        const title = $('#todoInput').val();
+
+        //check title
+        if (title.trim().length ===0) {
+            alert("tieu de ko dc de trong")
+            return;
+        }
+
+        //call api
+        const  request = {
+            title: title
+        }
+
+        $.ajax({
+                url: "/api/v1/todos",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(request),
+                success: function (res) {
+                    $('ul').append(`
+                    <li id="id-${res.id}">
+                        <input type="res.id">
+                        <span>${res.title}</span>
+                        <button onclick="editTodo(${res.id})">Edit</button>
+                        <button onclick="deleteTodo(${res.id})">Delete</button>
+                    </li>
+                    `)
+
+                    $('#todoInput').val("");
+                    alert("them thanh cong")
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            }
+        )
+    })
+
+
+    // function editTodo(id, currentTitle) {
+    //     const newTitle = window.prompt("Nhập tiêu đề mới", currentTitle);
+    //
+    //     // Check entered a new title
+    //     if (newTitle === null || newTitle.trim().length === 0) {
+    //         return;
+    //     }
+    //
+    //     const request = {
+    //         title: newTitle
+    //     };
+    //
+    //     $.ajax({
+    //         url: `/api/v1/todos/${id}`,
+    //         type: "PUT",
+    //         contentType: "application/json; charset=utf-8",
+    //         data: JSON.stringify(request),
+    //         success: function (res) {
+    //             $(`#id-${id} span`).text(newTitle);
+    //             alert("Chỉnh sửa thành công");
+    //         },
+    //         error: function (err) {
+    //             console.log(err);
+    //         }
+    //     });
+    // }
+    // $(`#id-${res.id} button:first-child`).click(function () {
+    //     editTodo(res.id, res.title);
+    // });
+
+    function editTodo(id) {
+        const currentTitle = $(`#id-${id} span`).text();
+        const newTitle = window.prompt("Nhập tiêu đề mới", currentTitle);
+
+        // Kiểm tra nếu người dùng đã nhập tiêu đề mới hoặc hủy bỏ
+        if (newTitle === null || newTitle.trim().length === 0) {
+            return; // Không làm gì nếu tiêu đề mới trống hoặc bị hủy bỏ
+        }
+
+        const request = {
+            title: newTitle
+        };
+
+        $.ajax({
+            url: `/api/v1/todos/${id}`,
+            type: "PUT",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(request),
+            success: function (res) {
+                $(`#id-${id} span`).text(newTitle);
+                alert("Chỉnh sửa thành công");
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+    }
+
+    // function toggleStatus(id) {
+    //     const request = {};
+    //
+    //     $.ajax({
+    //         url: `/api/v1/todos/${id}`,
+    //         type: "PUT",
+    //         contentType: "application/json; charset=utf-8",
+    //         data: JSON.stringify(request),
+    //         success: function (res) {
+    //             const currentStatus = $(`#id-${id} span`).hasClass("completed") ? "completed" : "incomplete";
+    //             $(`#id-${id} span`).toggleClass("completed incomplete");
+    //             alert("Thay đổi trạng thái thành công");
+    //         },
+    //         error: function (err) {
+    //             console.log(err);
+    //         }
+    //     });
+    // }
+
+
+
+    // $(`#id-${res.id} button.toggle-btn`).click(function () {
+    //     toggleStatus(res.id);
+    // });
+
+
+
+</script>
+</body>
+</html>
