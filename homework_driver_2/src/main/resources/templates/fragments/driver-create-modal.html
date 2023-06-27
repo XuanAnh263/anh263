@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="driver-create-modal" class="modal fade" id="driver-create-modal">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Create a new driver</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <form action="#" th:action="@{/drivers}" th:object="${driverMuonTaoMoi}" method="post" id="driver-create-modal-form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" th:field="*{name}" class="form-control" id="name"/>
+                        <div class="alert alert-warning" th:if="${#fields.hasErrors('name')}"
+                             th:errors="*{name}"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" th:field="*{address}" class="form-control" id="address"/>
+                        <div class="alert alert-warning" th:if="${#fields.hasErrors('address')}"
+                             th:errors="*{address}"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="text" th:field="*{phone}" class="form-control" id="phone"/>
+                        <div class="alert alert-warning" th:if="${#fields.hasErrors('phone')}"
+                             th:errors="*{phone}"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="level">Level</label>
+                        <select name="level" id="level" th:field="*{level}" class="form-control">
+                            <option th:each="level : ${T(com.example.homework_driver_2.statics.Level).values()}"
+                                    th:value="${level}" th:text="${level.name}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" id="submit-create-driver">Save</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

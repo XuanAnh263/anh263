@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student management</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+</head>
+<body>
+
+<div class="container-fluid m-0 p-0">
+
+    <div th:insert="fragments/nav :: nav"></div>
+
+    <div class="row mt-3 ml-3">
+        <div class="col">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#route-create-modal">
+                Create
+            </button>
+        </div>
+    </div>
+
+    <div th:insert="fragments/route-create-modal::route-create-modal"
+         th:with="routeMuonTaoMoi=${routeMuonTaoMoi}"></div>
+
+    <div class="row mt-4 mx-3">
+        <div class="col">
+            <table class="table table-bordered table-hover table-striped">
+                <tr>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Name's route</th>
+                    <th class="text-center">Distance</th>
+                    <th class="text-center">Number of Stop</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+                <tr th:each="route:${danhSachRoute}">
+                    <td th:text="${route.id}"></td>
+                    <td th:text="${route.name}"></td>
+                    <td th:text="${route.distance}"></td>
+                    <td th:text="${route.numberOfStop}"></td>
+                    <td class="text-center d-flex justify-content-around">
+                        <a role="button" class="mr-3 text-primary update-route" th:attr="route-id=${route.id}">
+                            <i class="fas fa-pencil-alt"></i>
+                        </a>
+
+                        <form class="delete-route" th:attr="route-id=${route.id}"
+                              onsubmit="return confirm('Bạn có chắc chắn muốn xóa lái xe này không?');">
+                            <button type="submit" class="btn btn-link p-0 mr-2">
+                                <span><i class="fa-solid fa-trash-can fa-lg text-danger"></i></span>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div th:insert="fragments/route-update-modal :: route-update-modal"></div>
+
+    <div th:insert="fragments/footer :: footer"></div>
+</div>
+
+</body>
+</html>
+
+
+<!-- jQuery library -->
+<!--<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        // toastr.options.timeOut = 2500; // 1.5s
+        // setTimeout(() => {
+        //     toastr.info('Page Loaded!');
+        // }, 1000);
+
+        $(".delete-route").click(async event => {
+            const routeId = $(event.currentTarget).attr("route-id");
+
+            await $.ajax({
+                url: "/api/routes/delete/" + routeId,
+                type: "DELETE",
+                success: function (data) {
+                    toastr.success("Xóa thành công!");
+                    setTimeout(() => {
+                        location.reload();
+                    }, 2000);
+                },
+                error: function (data) {
+                    toastr.warning(data.responseJSON.message);
+                }
+            })
+        })
+
+        $("#route-update-modal-form").validate({
+            onfocusout: false,
+            onkeyup: false,
+            onclick: false,
+            rules: {
+                "name": {
+                    required: true,
+                    maxlength: 255
+                },
+                "distance": {
+                    required: true,
+                    min: 5
+                },
+                "numberOfStop": {
+                    required: true,
+                    min: 5
+                }
+            },
+            messages: {
+                "name": {
+                    required: "Bắt buộc nhập tên sinh viên",
+                    maxlength: "Hãy nhập tối đa 255 ký tự"
+                },
+                "distance": {
+                    required: "Bắt buộc nhập địa chỉ sinh viên",
+                    min: "Khoảng cách ít nhât 5km"
+                },
+                "numberOfStop": {
+                    required: "Bắt buộc nhập địa chỉ sinh viên",
+                    min: "Điểm dừng ít nhất 5 điểm"
+                }
+            }
+        })
+
+        $(".update-route").click(async event => {
+            const routeId = $(event.currentTarget).attr("route-id")
+
+
+            let currentRoute = null;
+            await $.ajax({
+                url: "/api/routes/" + routeId,
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    console.log(data);
+                    currentRoute = data;
+                },
+                error: function (data) {
+                    console.log(data);
+                    toastr.warning(data.responseJSON.message);
+                }
+            });
+            if (!currentRoute) return;
+
+            $('#route-update-modal #name').val(currentRoute.name)
+            $('#route-update-modal #distance').val(currentRoute.distance)
+            $('#route-update-modal #numberOfStop').val(currentRoute.numberOfStop)
+
+            $('#route-update-modal #submit-update-route').attr("route-id", routeId)
+
+            $("#route-update-modal").modal("show")
+        });
+
+        $("#submit-update-route").click(() => {
+            const isValidForm = $('#route-update-modal-form').valid();
+            if (!isValidForm) return;
+
+            const routeId = $('#route-update-modal #submit-update-route').attr("route-id");
+            console.log(routeId);
+
+            const formData = $('#route-update-modal-form').serializeArray();
+            console.log(formData);
+            if (!formData || formData.length === 0) {
+                return;
+            }
+
+            const requestData = {};
+            for (let i = 0; i < formData.length; i++) {
+                requestData[formData[i].name] = formData[i].value;
+            }
+
+            $.ajax({
+                url: '/api/routes/' + routeId,
+                type: 'PUT',
+                data: JSON.stringify(requestData),
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    toastr.success("Cập nhật tuyến đường thành công");
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                },
+                error: function (data) {
+                    toastr.warning(data.responseJSON.message);
+                }
+            });
+        });
+
+
+        $("#route-create-modal-form").validate({
+            onfocusout: false,
+            onkeyup: false,
+            onclick: false,
+            rules: {
+                "name": {
+                    required: true,
+                    maxlength: 255
+                },
+                "distance": {
+                    required: true,
+                    min: 5
+                },
+                "numberOfStop": {
+                    required: true,
+                    min: 5
+                }
+            },
+            messages: {
+                "name": {
+                    required: "Bắt buộc nhập tên sinh viên",
+                    maxlength: "Hãy nhập tối đa 255 ký tự"
+                },
+                "distance": {
+                    required: "Bắt buộc nhập địa chỉ sinh viên",
+                    min: "Khoảng cách ít nhât 5km"
+                },
+                "numberOfStop": {
+                    required: "Bắt buộc nhập địa chỉ sinh viên",
+                    min: "Điểm dừng ít nhất 5 điểm"
+                }
+            }
+        })
+        $('#submit-create-modal').click(() => {
+            const isValidForm = $('#route-create-modal-form').valid();
+        })
+
+    });
+</script>
+
+
+<!--https://viblo.asia/p/tim-hieu-ve-jquery-validation-phan-1-E375zEqRlGW-->
