@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tạo</title>
+
+    <!-- Link google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700;900&amp;display=swap"
+          rel="stylesheet">
+
+    <!-- Link bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Link icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <!-- Link select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- Link tự viết -->
+    <link rel="stylesheet" th:href="@{/css/style-admin.css}">
+    <style>
+        .error{
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+<!--HEADER-->
+<div class="header d-flex align-items-center">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-start align-items-center">
+            <div class="logo">
+                <a th:href="@{/}">
+                    <img src="https://techmaster.vn/resources/image/logo-techmaster/white/white_200x74.png" alt="logo">
+                </a>
+            </div>
+            <div class="menu">
+                <a class="text-white ms-5" th:href="@{/}">Danh sách khóa học</a>
+                <a class="text-white ms-3" th:href="@{/admin/course/createForm}">Tạo khóa học</a>
+                <a class="text-white ms-5" th:href="@{/admin/supporters}">Danh sách hỗ trợ</a>
+                <a class="text-white ms-5" th:href="@{/admin/topics}">Danh sách danh mục</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BODY -->
+<div class="course-list mt-4 mb-4">
+    <div class="container">
+        <div class="mb-4">
+            <button class="btn btn-primary btn-create-supporter">
+                <span><i class="fa-solid fa-plus"></i></span>
+                Tạo
+            </button>
+            <a th:href="@{/}" class="btn-custom btn-refresh">
+                <span><i class="fa-solid fa-angle-left"></i></span>
+                Quay lại
+            </a>
+        </div>
+
+        <div class="p-2">
+            <div class="row">
+                <form id="creat-supporter-form">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone:</label>
+                        <input type="text" class="form-control" id="phone" name="phone" required>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<!-- axios -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<!-- select2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script>
+    $('#creat-supporter-form').validate({
+        rules: {
+            name: 'required',
+            email: {
+                required: true,
+                email: true
+            },
+            phone: {
+                required: true,
+                digits: true
+            }
+        },
+        messages: {
+            name: 'Vui lòng nhập tên',
+            email: {
+                required: 'Vui lòng nhập email',
+                email: 'Vui lòng nhập email hợp lệ'
+            },
+            phone: {
+                required: 'Vui lòng nhập số điện thoại',
+                digits: 'Vui lòng nhập số điện thoại hợp lệ'
+            }
+        }
+    });
+    $(".btn-create-supporter").click(function () {
+        let isValidate=$("#creat-supporter-form").valid()
+        if (!isValidate){
+            return
+        }
+        let name=$("#name").val()
+        console.log(name)
+        let email=$("#email").val()
+        let phone=$("#phone").val()
+
+        let formData={
+            name:name,
+            email:email,
+            phone:phone
+        }
+        console.log(formData)
+        $.ajax({
+            url:"/api/v1/admin/supporter",
+            type:"POST",
+            data:JSON.stringify(formData),
+            contentType:"application/json",
+            success:function (response) {
+                alert("thêm mới thành công")
+                window.location.href = 'http://localhost:8080/admin/supporters';
+            },
+            error:function (response) {
+                alert("lỗi")
+            }
+        })
+    })
+
+</script>
+</body>
+
+</html>
