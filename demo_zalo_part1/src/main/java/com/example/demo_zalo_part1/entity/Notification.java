@@ -39,7 +39,7 @@ public class Notification {
     @Enumerated(EnumType.STRING)
     Status status;
 
-    @Column(name = "is_read", columnDefinition = "BOOLEAN")
+    @Column(name = "[read]", columnDefinition = "BOOLEAN")
     Boolean read;
 
     @CreatedDate

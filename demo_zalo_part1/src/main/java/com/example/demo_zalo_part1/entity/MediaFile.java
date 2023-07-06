@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Builder
 @ToString
 @Entity
-@Table(name = "media_file")
+@Table(name = "media_files")
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
