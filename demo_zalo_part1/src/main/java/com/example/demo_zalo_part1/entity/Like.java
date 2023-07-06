@@ -2,9 +2,12 @@ package com.example.demo_zalo_part1.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @ToString
@@ -29,5 +32,7 @@ public class Like {
     @ManyToOne(targetEntity = Comment.class)
             @JoinColumn(name = "comment_id")
     Comment comment;
-    LocalDate createdAt;
+
+    @CreatedDate
+    LocalDateTime creatDateTime;
 }

@@ -27,6 +27,8 @@ public class Friend {
             @JoinColumn(name = "friend_id")
     User friend;
 
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     Status status;
 
 }

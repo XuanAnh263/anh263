@@ -4,9 +4,13 @@ import com.example.demo_zalo_part1.statics.Status;
 import com.example.demo_zalo_part1.statics.Type;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @ToString
@@ -31,14 +35,36 @@ public class Message {
     @ManyToOne(targetEntity = Sticker.class)
             @JoinColumn(name = "sticker_id")
     Sticker sticker;
+
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     Type type;
+
+    @Column(name = "content_text")
     String contentText;
+
+    @Column(name = "content_rick_text")
     String contentRickText;
+
+    @Column(name = "mentioned")
     Boolean mentioned;
+
+    @Column(name = "deleted")
     Boolean deleted;
+
+    @Column(name = "edited")
     Boolean edited;
-    Integer replyToMessageId;
+
+    @Column(name = "reply_to_message_id")
+    Long replyToMessageId;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     Status status;
-    LocalDate createdAt;
-    LocalDate updatedAt;
+
+    @CreatedDate
+    LocalDateTime creatDateTime;
+
+    @LastModifiedDate
+    LocalDateTime lastModifiedDateTime;
 }

@@ -19,14 +19,31 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class User extends BaseEntity {
 
+    @Column(name = "email")
     String email;
+
+    @Column(name = "password")
     String password;
+
+    @Column(name = "full_name")
     String username;
+
+    @Column(name = "date_of_birth")
     LocalDate dob;
+
+    @Column(name = "gender")
     String gender;
+
+    @Column(name = "avatar")
     String avatar;
+
+    @Column(name = "phone")
     String phone;
+
+    @Column(name = "address")
     String address;
+
+
     LocalDateTime deletedAt;
 
     @ManyToMany(fetch = FetchType.EAGER)

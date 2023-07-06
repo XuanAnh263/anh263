@@ -16,6 +16,7 @@ public class LoginRequest {
     String username;
 
     @NotBlank
+    @Size(min = 6, message = "Password must be at least 6 characters ")
     String password;
 
 }

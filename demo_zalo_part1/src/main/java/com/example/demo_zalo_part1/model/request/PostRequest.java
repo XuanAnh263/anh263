@@ -5,20 +5,21 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PostRequest {
+public class PostRequest extends BaseRequest{
 
 
     UserRequest user;
     String caption;
     String contentMedia;
-    Integer likeCount;
-    Integer commentCount;
-    LocalDate createdAt;
-    LocalDate updateAt;
+    Long likeCount;
+    Long commentCount;
+
 }

@@ -1,4 +1,5 @@
 spring:
+  #jpa mysql
   datasource:
     url: jdbc:mysql://localhost:3306/demo-zalo-part1?createDatabaseIfNotExist=true
     username: root
@@ -21,7 +22,11 @@ spring:
   web:
     resources:
       static-locations: file:src/main/resources/static/
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
 
+
+#hibernate jwt
 application:
   security:
     jwt:

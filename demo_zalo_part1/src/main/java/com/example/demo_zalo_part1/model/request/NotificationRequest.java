@@ -1,10 +1,16 @@
 package com.example.demo_zalo_part1.model.request;
 
+import com.example.demo_zalo_part1.statics.NotificationType;
 import com.example.demo_zalo_part1.statics.Status;
+import com.example.demo_zalo_part1.statics.Type;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @Data
@@ -14,14 +20,21 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class NotificationRequest {
-
-
+public class NotificationRequest extends BaseRequest {
+    @NotNull
     UserRequest user;
-    String type;
+
+    @NotNull
+    NotificationType type;
+
+    @NotBlank
+            @Size(max = 1000, message = "Content must not exceed 1000 characters")
     String content;
-    Status status;
+
+    @NotNull
+    NotificationType status;
+
+    @AssertTrue
     Boolean read;
-    LocalDate createdAt;
-    LocalDate updatedAt;
+
 }

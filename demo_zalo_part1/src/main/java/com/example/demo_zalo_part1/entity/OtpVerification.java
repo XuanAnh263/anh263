@@ -3,6 +3,8 @@ package com.example.demo_zalo_part1.entity;
 import com.example.demo_zalo_part1.statics.Status;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -26,12 +28,26 @@ public class OtpVerification {
             @JoinColumn(name = "user_id")
     User user;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Otp.class)
+            @JoinColumn(name = "otp_id")
     Otp otp;
+
+    @Column(name = "session")
     UUID session;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     Status status;
+
+    @Column(name = "success")
     Boolean success;
+
+    @Column(name = "verification_time")
     LocalDateTime verificationTime;
-    LocalDate createdAt;
-    LocalDate updatedAt;
+
+    @CreatedDate
+    LocalDateTime createDateTime;
+
+    @LastModifiedDate
+    LocalDateTime lastModifiedDateTime;
 }

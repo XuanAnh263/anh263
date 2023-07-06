@@ -4,9 +4,13 @@ import com.example.demo_zalo_part1.statics.Status;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -25,13 +29,22 @@ public class Notification {
             @JoinColumn(name = "user_id")
     User user;
 
+    @Column(name = "type")
     String type;
+
+    @Column(name = "content")
     String content;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     Status status;
 
-    @Column(name = "column_name", columnDefinition = "BOOLEAN")
+    @Column(name = "is_read", columnDefinition = "BOOLEAN")
     Boolean read;
 
-    LocalDate createdAt;
-    LocalDate updatedAt;
+    @CreatedDate
+    LocalDateTime creatDateTime;
+
+    @LastModifiedDate
+    LocalDateTime lastModifiedDateTime;
 }

@@ -5,6 +5,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -16,15 +17,18 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class OtpVerification {
+public class OtpVerification extends BaseRequest {
 
 
     UserRequest user;
     OtpRequest otp;
     UUID session;
     Status status;
+
+    @NotNull(message = "success is required")
     Boolean success;
+
+
     LocalDateTime verificationTime;
-    LocalDate createdAt;
-    LocalDate updatedAt;
+
 }

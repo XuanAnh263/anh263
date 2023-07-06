@@ -3,6 +3,7 @@ package com.example.demo_zalo_part1.entity;
 import com.example.demo_zalo_part1.statics.Status;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -21,9 +22,20 @@ public class Otp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+
+    @Column(name = "session_id")
     UUID sessionId;
+
+    @Column(name = "code")
     String code;
+
+
     LocalDateTime expiry;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     Status status;
-    LocalDate createdAt;
+
+    @CreatedDate
+    LocalDateTime creatDateTime;
 }
