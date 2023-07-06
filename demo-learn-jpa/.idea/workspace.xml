@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="de96a8de-a3ca-4028-900b-bcdb9e25c30d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Comment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Conversation.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Conversation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/File.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/File.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Friend.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Friend.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Like.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Like.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Notification.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Notification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Otp.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Otp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/OtpVerification.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/OtpVerification.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Post.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Post.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Sticker.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/Sticker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/model/request/CommentRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/model/request/CommentRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/model/request/ConversationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../demo_zalo_part1/src/main/java/com/example/demo_zalo_part1/model/request/ConversationRequest.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2SBKZGWUFccvqsAX9o2g1tvtyoa" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "D:/anh263/demo-learn-jpa"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="DemoLearnJpaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="demo-learn-jpa" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.demolearnjpa.DemoLearnJpaApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="de96a8de-a3ca-4028-900b-bcdb9e25c30d" name="Changes" comment="" />
+      <created>1688614590251</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1688614590251</updated>
+      <workItem from="1688614591645" duration="622000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
