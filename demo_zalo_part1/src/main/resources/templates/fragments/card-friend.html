@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- Friend -->
+<div class="card mb-6 card-friend" th:fragment="card-friend">
+  <div class="card-body">
+
+    <div class="media">
+
+      <div class="avatar avatar-online mr-5">
+        <img class="avatar-img" src="assets\images\avatars\10.jpg" alt="Anna Bridges">
+      </div>
+
+
+      <div class="media-body align-self-center">
+        <h6 class="mb-0">Anna Bridges</h6>
+        <small class="text-muted">Online</small>
+      </div>
+
+      <div class="align-self-center ml-5">
+        <div class="dropdown z-index-max">
+          <a href="#" class="btn btn-sm btn-ico btn-link text-muted w-auto" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fe-more-vertical"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item d-flex align-items-center" href="#">
+              New chat <span class="ml-auto fe-edit-2"></span>
+            </a>
+            <a class="dropdown-item d-flex align-items-center" href="#">
+              Delete <span class="ml-auto fe-trash-2"></span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Link -->
+    <a href="./chat-2" class="stretched-link"></a>
+
+  </div>
+</div>
+<!-- Friend -->
+</body>
+</html>
