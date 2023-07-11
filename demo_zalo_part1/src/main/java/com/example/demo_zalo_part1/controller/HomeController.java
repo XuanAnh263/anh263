@@ -55,4 +55,22 @@ public class HomeController {
         return "settings";
     }
 
+    @GetMapping("/create-chat")
+    public String getCreateChat() {
+        return "create-chat";
+    }
+
+    @GetMapping("/friend")
+    public String getFriend() {
+        return "friend";
+    }
+
+
+    @GetMapping("/profile")
+    public String getProfile() {
+        return "profile";
+    }
+
+
+
 }

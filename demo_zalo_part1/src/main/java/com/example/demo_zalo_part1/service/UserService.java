@@ -2,8 +2,10 @@ package com.example.demo_zalo_part1.service;
 
 import com.example.demo_zalo_part1.entity.Role;
 import com.example.demo_zalo_part1.entity.User;
+import com.example.demo_zalo_part1.exception.BadRequestException;
 import com.example.demo_zalo_part1.exception.ExistedUserException;
 import com.example.demo_zalo_part1.exception.RefreshTokenNotFoundException;
+import com.example.demo_zalo_part1.model.request.ChangePasswordRequest;
 import com.example.demo_zalo_part1.model.request.CreateUserRequest;
 import com.example.demo_zalo_part1.model.request.RefreshTokenRequest;
 import com.example.demo_zalo_part1.model.request.RegistrationRequest;
@@ -24,6 +26,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -125,6 +128,7 @@ public class UserService {
     }
 
     public void createUser(CreateUserRequest request) throws ExistedUserException {
+        //TODO: change username --> email
         Optional<User> userOptional = userRepository.findByUsername(request.getUsername());
         if (!userOptional.isEmpty()) {
             throw new ExistedUserException();
@@ -137,6 +141,16 @@ public class UserService {
                 .password(passwordEncoder.encode("123"))
                 .roles(roles)
                 .build();
+        userRepository.save(user);
+    }
+
+    public void changePassword(User user, ChangePasswordRequest request) {
+//        validate password
+        if (!BCrypt.checkpw(request.getOldPassword(), user.getPassword())) {
+            throw new BadRequestException("Incorrect password~");
+        }
+        String hash = BCrypt.hashpw(request.getNewPassword(), BCrypt.gensalt(12));
+        user.setPassword(hash);
         userRepository.save(user);
     }
 }
