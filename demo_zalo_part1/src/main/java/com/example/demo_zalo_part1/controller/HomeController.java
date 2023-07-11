@@ -20,6 +20,11 @@ public class HomeController {
     @GetMapping("/")
     public String getAll() {
 
+        return "signin";
+    }
+    @GetMapping("/index")
+    public String getIndex() {
+
         return "index";
     }
 
