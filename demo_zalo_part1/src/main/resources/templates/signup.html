@@ -6,7 +6,9 @@
     <head>
 
         <title>Đăng ký tài khoản Wave</title>
+        <th:block>
 
+        </th:block>
     </head>
     <!-- Head -->
 
@@ -26,36 +28,36 @@
                         <p class="text-center mb-6">Welcome to the official Chat web-client.</p>
 
                         <!-- Form -->
-                        <form class="mb-6">
+                        <form class="mb-6 sign-up-form" id="sign-up-form">
 
                             <!-- Name -->
                             <div class="form-group">
                                 <label for="name" class="sr-only">Name</label>
-                                <input type="text" class="form-control form-control-lg sign-up-name" id="name" placeholder="Enter your name">
+                                <input type="text" name="name" class="form-control form-control-lg sign-up-name" id="name" placeholder="Enter your name">
                             </div>
 
                             <!-- Email -->
                             <div class="form-group">
                                 <label for="phone" class="sr-only">Phone</label>
-                                <input type="phone" class="form-control form-control-lg sign-up-phone" id="phone" placeholder="Enter your phone">
+                                <input type="phone" name="phone" class="form-control form-control-lg sign-up-phone" id="phone" placeholder="Enter your phone">
                             </div>
 
                             <!-- Email -->
                             <div class="form-group">
                                 <label for="email" class="sr-only">Email Address</label>
-                                <input type="email" class="form-control form-control-lg sign-up-email" id="email" placeholder="Enter your email">
+                                <input type="email" name="email" class="form-control form-control-lg sign-up-email" id="email" placeholder="Enter your email">
                             </div>
 
                             <!-- Password -->
                             <div class="form-group">
                                 <label for="password" class="sr-only">Password</label>
-                                <input type="password" class="form-control form-control-lg sign-up-password" id="password" placeholder="Enter your password">
+                                <input type="password" name="password" class="form-control form-control-lg sign-up-password" id="password" placeholder="Enter your password">
                             </div>
 
                             <!-- Password -->
                             <div class="form-group">
                                 <label for="password" class="sr-only">ConFirm Password</label>
-                                <input type="password" class="form-control form-control-lg sign-up-confirm-password" id="confirmPassword" placeholder="Enter your confirm password">
+                                <input type="password" name="confirm-password" class="form-control form-control-lg sign-up-confirm-password" id="confirm-password" placeholder="Enter your confirm password">
                             </div>
 
                             <!-- Submit -->
@@ -80,112 +82,99 @@
     <th:block id="js-account">
 
         <script>
-            $(document).on('click',function (e) {
-                let target = e.target;
-                //validate sign up
-                if (target.closest('.sign-up-btn')) {
-                    let emailFormat = new RegExp(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/);
-                    let phoneFormat = new RegExp(/((09|03|07|08|05)+([0-9]{8})\b)/g);
-                    let isValid = true;
 
-                    let fullName = $('.sign-up-name');
-                    let fullNameValue = fullName.val();
-                    let fullNameInvalid = fullName.next();
+            $(document).ready(function () {
 
-                    let phone = $('.sign-up-phone');
-                    let phoneValue = phone.val();
-                    let phoneInvalid = phone.next();
+                $('#sign-up-form').validate({
+                    onfocusout: false,
+                    onkeyup: false,
+                    onclick: false,
+                    errorPlacement: function (error, element) {
+                        error.addClass("error-message");
+                        error.insertAfter(element.parent());
+                    },
 
-                    let email = $('.sign-up-email');
-                    let emailValue = email.val();
-                    let emailInvalid = email.next();
+                    rules:{
+                        "name": {
+                            required:true,
 
-                    let password = $('.sign-up-password');
-                    let passwordValue = password.val();
-                    let passwordInvalid = password.next();
-
-                    let confirmPassword = $('.sign-up-confirm-password');
-                    let confirmPasswordValue = confirmPassword.val();
-                    let confirmPasswordInvalid = confirmPassword.next();
-
-
-                    //validate name
-                    if (fullNameValue === "") {
-                        fullNameInvalid.css('display', 'block');
-                        fullNameInvalid.html('Vui lòng nhập họ tên');
-                        isValid = false;
-                    }
-
-                    //validate phone
-                    if (phoneValue === "") {
-                        phoneInvalid.css('display', 'block');
-                        phoneInvalid.html('Vui lòng nhập số điện thoại');
-                        isValid = false;
-                    } else if (!phoneFormat.test(phoneValue)) {
-                        phoneInvalid.css('display', 'block');
-                        phoneInvalid.html('Số điện thoại không hợp lệ');
-                        isValid = false;
-                    }
-
-
-                    //validate email
-                    if (emailValue === "") {
-                        emailInvalid.css('display', 'block');
-                        emailInvalid.html('Vui lòng nhập email');
-                        isValid = false;
-                    } else if (!emailFormat.test(emailValue)) {
-                        emailInvalid.css('display', 'block');
-                        emailInvalid.html('Email không hợp lệ');
-                        isValid = false;
-                    }
-
-                    //validate pass
-                    if (passwordValue.length < 6 || passwordValue.length > 20) {
-                        passwordInvalid.css('display', 'block');
-                        passwordInvalid.html('Độ dài mật khẩu từ 6 - 20 ký tự')
-                        isValid = false;
-                    }
-
-                    //validate confirm pass
-                    if (confirmPasswordValue.length < 6 || passwordValue.length > 20) {
-                        confirmPasswordInvalid.css('display', 'block');
-                        confirmPasswordInvalid.html('Độ dài mật khẩu phải từ 6-20 ký tự');
-                        isValid = false;
-                    } else if (confirmPasswordValue !== passwordValue) {
-                        confirmPasswordInvalid.css('display', 'block');
-                        confirmPasswordInvalid.html('Không trùng khớp.');
-                        isValid = false;
-                    }
-
-                    if (isValid === true) {
-                        req = {
-                            full_name: fullNameValue,
-                            phone: phoneValue,
-                            email: emailValue,
-                            password: passwordValue
+                        },
+                        "phone": {
+                            required: true,
+                        },
+                        "email": {
+                            required: true,
+                            email: true
+                        },
+                        "password": {
+                            required: true,
+                            minlength: 6,
+                            maxlength: 20,
+                        },
+                        "confirm-password":{
+                            required:true,
+                            minlength: 6,
+                            maxlength: 20,
+                            equalTo: "#password"
+                        }
+                    },
+                    messages: {
+                        "name": {
+                            required:"Please enter your full name"
+                        },
+                        "phone": {
+                            required: "Please enter your phone"
+                        },
+                        "email": {
+                            required: "Please enter your email",
+                            email: "Incorrect email format"
+                        },
+                        "password": {
+                            required: "Please enter your password",
+                        },
+                        "confirm-password": {
+                            required: "Please enter your confirm password",
 
                         }
-                        $.ajax({
-                            url: "/api/v1/authentication/signup",
-                            type: "POST",
-                            data: JSON.stringify(req),
-                            contentType: "application/json; charset=utf-8",
-                            success: function(data) {
-                                alert("thanh cong");
-
-                                window.location.href = 'http://localhost:8080/signin';
-
-                            },
-                            error: function(data) {
-                                alert("ko thanh cong")
-
-                            },
-                        })
-
+                    }
+                })
+                $('.sign-up-btn').click((key, value) => {
+                    let isValidForm = $('#sign-up-form').valid();
+                    if (!isValidForm) return;
+                    let signUpName = $('#name').val();
+                    let signUpPhone = $('#phone').val();
+                    let signUpEmail = $('#email').val();
+                    let signUpPassword = $('#password').val();
+                    let signUpConfirmPass = $('#confirm-password').val()
+                    let req = {
+                        name: signUpName,
+                        phone: signUpPhone,
+                        email: signUpEmail,
+                        password: signUpPassword
                     }
 
-                }
+                    $.ajax({
+                        url: "/api/v1/authentication/signup",
+                        type: "POST",
+                        data: JSON.stringify(req),
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            console.log(data);
+
+                            toastr.success("Sign up successfully");
+                            // setTimeout(function () {
+                            //     window.location.href = 'http://localhost:8080/index';
+                            // }, 4000)
+
+                        },
+                        error: function (data) {
+                            toastr.error("Sign up failed")
+                        }
+                    })
+                })
             })
+
+
         </script>
 
 

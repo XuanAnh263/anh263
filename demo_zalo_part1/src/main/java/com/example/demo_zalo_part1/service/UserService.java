@@ -21,6 +21,7 @@ import com.example.demo_zalo_part1.statics.Roles;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -37,6 +38,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserService {
 

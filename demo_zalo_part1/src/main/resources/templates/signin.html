@@ -1,17 +1,11 @@
 ﻿<!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-      th:replace="layout/layout :: main-fragment(~{:: title}, ~{:: #css}, ~{:: .layout }, ~{:: #js-account})">
+      th:replace="layout/layout :: main-fragment(~{:: title}, ~{}, ~{:: .layout }, ~{:: #js-account})">
 
     <head>
 
         <title>Đăng nhập tài khoảng WAVE</title>
 
-        <th:block th:id="css">
-
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css"
-                  integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g=="
-                  crossorigin="anonymous" referrerpolicy="no-referrer"/>
-        </th:block>
     </head>
 
     <body>
@@ -36,13 +30,13 @@
                             <!-- Email -->
                             <div class="form-group">
                                 <label for="email" class="sr-only">Email</label>
-                                <input type="email" class="form-control form-control-lg log-in-email" id="email" placeholder="Enter your email">
+                                <input type="email" name="email"  class="form-control form-control-lg log-in-email" id="email" placeholder="Enter your email">
                             </div>
 
                             <!-- Password -->
                             <div class="form-group">
                                 <label for="password" class="sr-only">Password</label>
-                                <input type="password" class="form-control form-control-lg log-in-password" id="password" placeholder="Enter your password">
+                                <input type="password" name="password" class="form-control form-control-lg log-in-password" id="password" placeholder="Enter your password">
                             </div>
 
                             <div class="form-group d-flex justify-content-between">
@@ -73,17 +67,21 @@
     </body>
 
 <th:block id="js-account">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
-            integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
 
     <script>
+
         $(document).ready(function () {
+
             $('#sign-in-form').validate({
                 onfocusout: false,
                 onkeyup: false,
                 onclick: false,
+                errorPlacement: function (error, element) {
+                    error.addClass("error-message");
+                    error.insertAfter(element.parent());
+                },
 
                 rules:{
                     "email": {
@@ -91,22 +89,26 @@
                         email: true
                     },
                     "password": {
-                        required: true
+                        required: true,
+                        minlength: 6,
+                        maxlength: 20,
+
+
+                    }
+                },
+                messages: {
+                    "email": {
+                        required: "Please enter your email",
+                        email: "Incorrect email format"
                     },
-                    message: {
-                        "email": {
-                            required: "Please enter your email",
-                            email: "Incorrect email format"
-                        },
-                        "password": {
-                            required: "Please enter your email",
-                            password: "Please enter password between 6 to 20 characters"
-                        }
+                    "password": {
+                        required: "Please enter your password",
+
                     }
                 }
             })
             $('.log-in-btn').click((key, value) => {
-                let isValidForm = $('#sign-in-form').valid()
+                let isValidForm = $('#sign-in-form').valid();
                 if (!isValidForm) return;
                 let signInEmail = $('#email').val();
                 let sigInPassword = $('#password').val();
@@ -130,9 +132,9 @@
                             userId: data.id
                         }
                         localStorage.setItem("userInfor", JSON.stringify(userInfor));
-                        toastr.success("Sig in successfully");
+                        toastr.success("Sign in successfully");
                         setTimeout(function () {
-                            // window.location.href = 'http://localhost:8080/index';
+                            window.location.href = 'http://localhost:8080/index';
                         }, 2000)
 
                     },

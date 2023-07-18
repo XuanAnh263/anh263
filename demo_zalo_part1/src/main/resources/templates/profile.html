@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-      th:replace="layout/layout :: main-fragment(~{:: title}, ~{}, ~{:: .layout }, ~{})">
+      th:replace="layout/layout :: main-fragment(~{:: title}, ~{}, ~{:: .layout }, ~{:: #js-log-out})">
 <head>
 
     <title>Profile</title>
@@ -144,7 +144,7 @@
 
                 <div class="col">
                   <!-- Button -->
-                  <button type="button" class="btn btn-lg btn-block btn-basic d-flex align-items-center">
+                  <button type="button" class="log-out-btn btn btn-lg btn-block btn-basic d-flex align-items-center">
                     Logout
                     <span class="fe-log-out ml-auto"></span>
                   </button>
@@ -164,4 +164,10 @@
   </div>
 </div>
 </body>
+
+<th:block id="js-log-out">
+  <script>
+
+  </script>
+</th:block>
 </html>

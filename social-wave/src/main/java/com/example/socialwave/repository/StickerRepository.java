@@ -1,0 +1,4 @@
+package com.example.socialwave.repository;
+
+public interface StickerRepository {
+}
