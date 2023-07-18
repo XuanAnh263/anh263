@@ -148,7 +148,7 @@ public class UserService {
         Optional<User> userOptional = userRepository.findByEmail(email);
         System.out.println(userOptional);
         if (userOptional.isEmpty()) {
-            System.out.println("lôi ");
+            System.out.println("lôi");
             throw new NotFoundException("User with email " + email + " not found");
         }
 
@@ -156,6 +156,7 @@ public class UserService {
         if (LocalDateTime.now().isAfter(otp.getExpiry())) {
             throw new InvalidOtpException("Otp expired");
         }
+
         try {
             otpService.sendOtpEmail(email);
         } catch (Exception e) {
@@ -175,10 +176,10 @@ public class UserService {
             throw new NotFoundException("User with email " + email + " not found");
         }
 
-        boolean isVerified = otpVerificationService.verifyOtp(email, otpCode, sessionId);
-        if (!isVerified) {
-            throw new InvalidOtpException("Invalid OTP code");
-        }
+//        boolean isVerified = otpVerificationService.verifyOtp(email, otpCode, sessionId);
+//        if (!isVerified) {
+//            throw new InvalidOtpException("Invalid OTP code");
+//        }
         try {
             userOptional.ifPresent(user -> {
                 user.setPassword(newPassword);

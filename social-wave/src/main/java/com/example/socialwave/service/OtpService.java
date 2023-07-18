@@ -59,6 +59,4 @@ public class OtpService {
         return otpRepository.save(otp);
     }
 
-
-
 }
