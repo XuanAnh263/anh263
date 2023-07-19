@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="layout/layout :: main-fragment(~{:: title}, ~{}, ~{:: .layout }, ~{:: #js-account})">
+
+<!-- Head -->
+<head>
+
+    <title>Đăng ký tài khoản Wave</title>
+    <th:block>
+
+    </th:block>
+</head>
+<!-- Head -->
+
+<body>
+
+<div class="layout">
+
+    <div class="container d-flex flex-column">
+        <div class="row align-items-center justify-content-center no-gutters min-vh-100">
+
+            <div class="col-12 col-md-5 col-lg-4 py-8 py-md-11">
+
+                <!-- Heading -->
+                <h1 class="font-bold text-center">Sign up</h1>
+
+                <!-- Text -->
+                <p class="text-center mb-6">Welcome to the official Chat web-client.</p>
+
+                <!-- Form -->
+                <form class="mb-6 " id="sign-up-form">
+
+                    <!-- Name -->
+                    <div class="form-group">
+                        <label for="name" class="sr-only">Name</label>
+                        <input type="text" name="name" class="form-control form-control-lg sign-up-name" id="name" placeholder="Enter your name">
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="phone" class="sr-only">Phone</label>
+                        <input type="phone" name="phone" class="form-control form-control-lg sign-up-phone" id="phone" placeholder="Enter your phone">
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="email" class="sr-only">Email Address</label>
+                        <input type="email" name="email" class="form-control form-control-lg sign-up-email" id="email" placeholder="Enter your email">
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="password" class="sr-only">Password</label>
+                        <input type="password" name="password" class="form-control form-control-lg sign-up-password" id="password" placeholder="Enter your password">
+                    </div>
+
+                    <!-- Password -->
+                    <div class="form-group">
+                        <label for="password" class="sr-only">ConFirm Password</label>
+                        <input type="password" name="confirm-password" class="form-control form-control-lg sign-up-confirm-password" id="confirm-password" placeholder="Enter your confirm password">
+                    </div>
+
+                    <!-- Submit -->
+                    <button class="btn btn-lg btn-block btn-primary sign-up-btn" type="button">Sign up</button>
+                </form>
+
+                <!-- Text -->
+                <p class="text-center">
+                    Already have an account? <a href="./signin">Sign in</a>.
+                </p>
+
+            </div>
+        </div> <!-- / .row -->
+    </div>
+
+</div>
+<!-- .layout -->
+
+
+</body>
+
+<th:block id="js-account">
+
+    <script>
+
+        $(document).ready(function () {
+
+            $.validator.addMethod("phonecheck", function(value) {
+                return value.match(/((09|03|07|08|05)+([0-9]{8})\b)/g);
+            });
+
+            $.validator.addMethod("emailcheck", function(val) {
+                return val.match(/^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/);
+            });
+            $('#sign-up-form').validate({
+                onfocusout: false,
+                onkeyup: false,
+                onclick: false,
+                errorPlacement: function (error, element) {
+                    error.addClass("error-message");
+                    error.insertAfter(element.parent());
+                },
+
+                rules:{
+                    "name": {
+                        required:true,
+                        maxlength: 50
+                    },
+                    "phone": {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 10,
+                        phonecheck: true
+
+
+                    },
+                    "email": {
+                        required: true,
+                        emailcheck: true,
+                        email: true
+                    },
+                    "password": {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 20,
+                    },
+                    "confirm-password":{
+                        required:true,
+                        minlength: 6,
+                        maxlength: 20,
+                        equalTo: "#password"
+                    }
+                },
+                messages: {
+                    "name": {
+                        required:"Please enter your full name",
+                        maxlength: "độ dài 50 ký tự"
+                    },
+                    "phone": {
+                        required: "Please enter your phone",
+                        minlength:"Phone number must be 10 digits",
+                        maxlength:"Phone number must be 10 digits",
+                        phonecheck: "Please enter a valid phone number"
+                    },
+                    "email": {
+                        required: "Please enter your email",
+                        emailcheck: "Please enter a valid email",
+                        email: "Incorrect email format"
+                    },
+                    "password": {
+                        required: "Please enter your password",
+                    },
+                    "confirm-password": {
+                        required: "Please enter your confirm password",
+
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    error.addClass("error-message");
+                    error.insertAfter(element.parent());
+                },
+
+            });
+
+            $('.sign-up-btn').click((key, value) => {
+                let isValidForm = $('#sign-up-form').valid();
+                if (!isValidForm) return;
+
+                let signUpName = $('#name').val();
+                let signUpPhone = $('#phone').val();
+                let signUpEmail = $('#email').val();
+                let signUpPassword = $('#password').val();
+                let signUpConfirmPass = $('#confirm-password').val()
+
+
+                let req = {
+                    name: signUpName,
+                    phone: signUpPhone,
+                    email: signUpEmail,
+                    password: signUpPassword
+                }
+
+                $.ajax({
+                    url: "/api/v1/authentication/signup",
+                    type: "POST",
+                    data: JSON.stringify(req),
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        console.log(data);
+
+                        toastr.success("Sign up successfully");
+                        setTimeout(function () {
+                            window.location.href = 'http://localhost:8080/signin';
+                        }, 4000)
+
+                    },
+                    error: function (data) {
+                        toastr.error("Sign up failed")
+                    }
+                })
+            })
+        })
+
+
+    </script>
+
+
+
+</th:block>
+</html>

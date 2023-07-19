@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="chat-toolbar-nav " th:fragment="chat-toolbar-nav">
+  <li class="nav-item  list-inline-item d-none d-xl-block mr-3">
+    <a class="nav-link text-muted px-3" data-toggle="collapse" data-target="#chat-1-search" href="#" title="Search this chat">
+      <i class="icon-md fe-search"></i>
+    </a>
+  </li>
+
+  <li class="nav-item  list-inline-item d-none d-xl-block mr-0">
+    <a class="nav-link text-muted px-3" href="#" data-chat-sidebar-toggle="#chat-1-info" title="Details">
+      <i class="icon-md fe-more-vertical"></i>
+    </a>
+  </li>
+</div>
+</body>
+</html>

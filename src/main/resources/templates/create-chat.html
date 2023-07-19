@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      th:replace="layout/layout :: main-fragment(~{:: title}, ~{}, ~{:: .layout }, ~{})">
+<head>
+
+  <title>Create chat</title>
+
+</head>
+<body>
+
+
+<div class="layout">
+    <th:block th:replace="fragments/nav :: nav"></th:block>
+  <div class="sidebar">
+    <div  class="h-100" >
+      <div class=" tab-pane  h-100" >
+        <div class="d-flex flex-column h-100">
+
+          <div class="hide-scrollbar">
+          <div class="container-fluid py-6">
+            <!-- Title -->
+            <h2 class="font-bold mb-6">Create</h2>
+            <!-- Title -->
+
+
+            <!-- Tabs -->
+            <ul class="nav nav-tabs nav-justified mb-6" >
+              <li class="nav-item">
+                <a href="#create-group-details" class="nav-link active" data-toggle="tab" role="tab" aria-selected="true">Details</a>
+              </li>
+
+              <li class="nav-item">
+                <a href="#create-group-members" class="nav-link" data-toggle="tab" role="tab" aria-selected="false">Members</a>
+              </li>
+            </ul>
+            <!-- Tabs -->
+
+            <!-- Create chat -->
+            <div class="tab-content" role="tablist">
+
+              <!-- Chat details -->
+              <div id="create-group-details" class="tab-pane fade show active" role="tabpanel">
+                <form action="#">
+                  <div class="form-group">
+                    <label class="small">Photo</label>
+                    <div class="position-relative text-center bg-secondary rounded p-6">
+                      <div class="avatar bg-primary text-white mb-5">
+                        <i class="icon-md fe-image"></i>
+                      </div>
+
+                      <p class="small text-muted mb-0">You can upload jpg, gif or png files. <br> Max file size 3mb.</p>
+                      <input id="upload-chat-photo" class="d-none" type="file">
+                      <label class="stretched-label mb-0" for="upload-chat-photo"></label>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="small" for="new-chat-title">Name</label>
+                    <input class="form-control form-control-lg" name="new-chat-title" id="new-chat-title" type="text" placeholder="Group Name">
+                  </div>
+
+                  <div class="form-group">
+                    <label class="small" for="new-chat-topic">Topic (optional)</label>
+                    <input class="form-control form-control-lg" name="new-chat-topic" id="new-chat-topic" type="text" placeholder="Group Topic">
+                  </div>
+
+                  <div class="form-group mb-0">
+                    <label class="small" for="new-chat-description">Description</label>
+                    <textarea class="form-control form-control-lg" name="new-chat-description" id="new-chat-description" rows="6" placeholder="Group Description"></textarea>
+                  </div>
+
+                </form>
+              </div>
+              <!-- Chat details -->
+
+              <!-- Chat Members -->
+              <div id="create-group-members" class="tab-pane fade" role="tabpanel">
+                <nav class="list-group list-group-flush mb-n6">
+
+                  <!-- Friend -->
+                  <div class="card mb-6">
+                    <div class="card-body">
+
+                      <div class="media">
+
+                        <div class="avatar avatar-online mr-5">
+                          <img class="avatar-img" src="assets\images\avatars\10.jpg" alt="Anna Bridges">
+                        </div>
+
+
+
+                        <div class="media-body align-self-center mr-6">
+                          <h6 class="mb-0">Anna Bridges</h6>
+                          <small class="text-muted">Online</small>
+                        </div>
+
+                        <div class="align-self-center ml-auto">
+                          <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" id="id-user-1" type="checkbox">
+                            <label class="custom-control-label" for="id-user-1"></label>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <!-- Label -->
+                    <label class="stretched-label" for="id-user-1"></label>
+                  </div>
+                  <!-- Friend -->
+
+                  <!-- Friend -->
+                  <div class="card mb-6">
+                    <div class="card-body">
+
+                      <div class="media">
+
+
+                        <div class="avatar mr-5">
+                          <img class="avatar-img" src="assets\images\avatars\6.jpg" alt="Brian Dawson">
+                        </div>
+
+
+                        <div class="media-body align-self-center mr-6">
+                          <h6 class="mb-0">Brian Dawson</h6>
+                          <small class="text-muted">last seen 2 hours ago</small>
+                        </div>
+
+                        <div class="align-self-center ml-auto">
+                          <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" id="id-user-2" type="checkbox">
+                            <label class="custom-control-label" for="id-user-2"></label>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <!-- Label -->
+                    <label class="stretched-label" for="id-user-2"></label>
+                  </div>
+                  <!-- Friend -->
+
+                  <!-- Friend -->
+                  <div class="card mb-6">
+                    <div class="card-body">
+
+                      <div class="media">
+
+
+                        <div class="avatar mr-5">
+                          <img class="avatar-img" src="assets\images\avatars\5.jpg" alt="Leslie Sutton">
+                        </div>
+
+
+                        <div class="media-body align-self-center mr-6">
+                          <h6 class="mb-0">Leslie Sutton</h6>
+                          <small class="text-muted">last seen 3 days ago</small>
+                        </div>
+
+                        <div class="align-self-center ml-auto">
+                          <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" id="id-user-3" type="checkbox">
+                            <label class="custom-control-label" for="id-user-3"></label>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <!-- Label -->
+                    <label class="stretched-label" for="id-user-3"></label>
+                  </div>
+                  <!-- Friend -->
+
+                  <!-- Friend -->
+                  <div class="card mb-6">
+                    <div class="card-body">
+
+                      <div class="media">
+
+
+                        <div class="avatar mr-5">
+                          <img class="avatar-img" src="assets\images\avatars\4.jpg" alt="Matthew Wiggins">
+                        </div>
+
+
+                        <div class="media-body align-self-center mr-6">
+                          <h6 class="mb-0">Matthew Wiggins</h6>
+                          <small class="text-muted">last seen 3 days ago</small>
+                        </div>
+
+                        <div class="align-self-center ml-auto">
+                          <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" id="id-user-4" type="checkbox">
+                            <label class="custom-control-label" for="id-user-4"></label>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <!-- Label -->
+                    <label class="stretched-label" for="id-user-4"></label>
+                  </div>
+                  <!-- Friend -->
+
+                </nav>
+              </div>
+              <!-- Chat Members -->
+
+            </div>
+            <!-- Create chat -->
+
+          </div>
+        </div>
+
+        <!-- Button -->
+        <div class="pb-6">
+          <div class="container-fluid">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Create group</button>
+          </div>
+        </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
