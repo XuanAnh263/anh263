@@ -5,6 +5,7 @@ import com.example.socialwave.exception.UserNotFoundException;
 import com.example.socialwave.model.request.FriendRequest;
 import com.example.socialwave.model.response.FriendResponse;
 import com.example.socialwave.service.FriendService;
+import com.example.socialwave.service.UserService;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -21,6 +22,7 @@ import java.util.Optional;
 public class FriendController {
     FriendService friendService;
 
+    UserService userService;
 
 
     //TODO api add friend

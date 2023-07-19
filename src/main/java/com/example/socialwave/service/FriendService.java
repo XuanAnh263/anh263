@@ -26,41 +26,41 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class FriendService {
-    UserRepository userRepository;
-    FriendRepository friendRepository;
-    ObjectMapper objectMapper;
-
-    public List<FriendResponse> getAll() {
-        List<Friend> friendList = friendRepository.findAll();
-        if (!CollectionUtils.isEmpty(friendList)) {
-            return friendList.stream().map(friend -> objectMapper.convertValue(friend, FriendResponse.class)).collect(Collectors.toList());
-        }
-        return Collections.emptyList();
-    }
-
-    public Optional<FriendResponse> addFriend(FriendResponse friendResponse) {
-        User friendId = friendResponse.getFriendId();
-        User userId = friendResponse.getUserId();
-
-        if (userId == null || friendId == null) {
-            return Optional.of(new FriendResponse(FriendStatus.FAILURE));
-        }
-
-        Optional<User> userOptional = userRepository.findById(userId.getId());
-        Optional<User> friendOptional = userRepository.findById(friendId.getId());
-
-        if (userOptional.isEmpty() || friendOptional.isEmpty()) {
-            return Optional.of(new FriendResponse(FriendStatus.FAILURE));
-        }
-
-        Friend friendShip = new Friend();
-        friendShip.setUserId(userOptional.get());
-        friendShip.setFriendId(friendOptional.get());
-
-        friendRepository.save(friendShip);
-
-        return Optional.of(new FriendResponse(FriendStatus.SUCCESS));
-    }
+//    UserRepository userRepository;
+//    FriendRepository friendRepository;
+//    ObjectMapper objectMapper;
+//
+//    public List<FriendResponse> getAll() {
+//        List<Friend> friendList = friendRepository.findAll();
+//        if (!CollectionUtils.isEmpty(friendList)) {
+//            return friendList.stream().map(friend -> objectMapper.convertValue(friend, FriendResponse.class)).collect(Collectors.toList());
+//        }
+//        return Collections.emptyList();
+//    }
+//
+//    public Optional<FriendResponse> addFriend(FriendResponse friendResponse) {
+//        User friendId = friendResponse.getFriendId();
+//        User userId = friendResponse.getUserId();
+//
+//        if (userId == null || friendId == null) {
+//            return Optional.of(new FriendResponse(FriendStatus.FAILURE));
+//        }
+//
+//        Optional<User> userOptional = userRepository.findById(userId.getId());
+//        Optional<User> friendOptional = userRepository.findById(friendId.getId());
+//
+//        if (userOptional.isEmpty() || friendOptional.isEmpty()) {
+//            return Optional.of(new FriendResponse(FriendStatus.FAILURE));
+//        }
+//
+//        Friend friendShip = new Friend();
+//        friendShip.setUserId(userOptional.get());
+//        friendShip.setFriendId(friendOptional.get());
+//
+//        friendRepository.save(friendShip);
+//
+//        return Optional.of(new FriendResponse(FriendStatus.SUCCESS));
+//    }
 
 
 }

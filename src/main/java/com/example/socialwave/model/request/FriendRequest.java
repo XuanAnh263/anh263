@@ -13,8 +13,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class FriendRequest {
 
-    User userId;
-    User friendId;
-    FriendStatus status;
+    Long friendId;
+    Long userId;
 
 }

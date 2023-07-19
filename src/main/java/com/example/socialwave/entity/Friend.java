@@ -31,8 +31,10 @@ public class Friend {
     @Enumerated(EnumType.STRING)
     FriendStatus status;
 
-    public Friend(User userId, User friendId) {
+    public Friend(User userId, User friendId, FriendStatus status) {
         this.userId = userId;
         this.friendId = friendId;
+        this.status = status;
     }
+
 }

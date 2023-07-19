@@ -1,17 +1,21 @@
 package com.example.socialwave.service;
 
+import com.example.socialwave.entity.Friend;
 import com.example.socialwave.entity.Otp;
 import com.example.socialwave.entity.User;
 import com.example.socialwave.exception.*;
 import com.example.socialwave.model.request.*;
+import com.example.socialwave.model.response.FriendResponse;
 import com.example.socialwave.model.response.JwtResponse;
 import com.example.socialwave.model.response.UserResponse;
+import com.example.socialwave.repository.FriendRepository;
 import com.example.socialwave.repository.OtpRepository;
 import com.example.socialwave.repository.RefreshTokenRepository;
 import com.example.socialwave.repository.UserRepository;
 import com.example.socialwave.security.CustomUserDetails;
 import com.example.socialwave.security.JwtUtils;
 import com.example.socialwave.security.SecurityUtils;
+import com.example.socialwave.statics.FriendStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -44,6 +48,9 @@ public class UserService {
     final UserRepository userRepository;
 
     @Autowired
+    final FriendRepository friendRepository;
+
+    @Autowired
     OtpRepository otpRepository;
     final ObjectMapper objectMapper;
 
@@ -61,13 +68,14 @@ public class UserService {
     final JwtUtils jwtUtils;
 
     public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository,
-                       ObjectMapper objectMapper,
+                       ObjectMapper objectMapper, FriendRepository friendRepository,
                        RefreshTokenRepository refreshTokenRepository, JwtUtils jwtUtils) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.objectMapper = objectMapper;
         this.refreshTokenRepository = refreshTokenRepository;
         this.jwtUtils = jwtUtils;
+        this.friendRepository = friendRepository;
     }
 
     public void signUpRequest(SignUpRequest request) {
@@ -191,26 +199,9 @@ public class UserService {
             throw new PasswordUpdateException("Failed to update password", e);
         }
 
-//        Optional<User> userOptional = userRepository.findByEmail(request.getEmail());
-//        try {
-//            userOptional.ifPresent(user -> {
-//                user.setPassword(passwordEncoder.encode(request.getNewPassword()));
-//                userRepository.save(user);
-//            });
-//        }catch (Exception e) {
-//            throw new PasswordUpdateException("Failed to update password", e);
-//        }
+
 
     }
-
-
-
-//    public void sendOtpEmail(String email) {
-//        otpService.sendOtpEmail(email);
-//    }
-
-
-
     public void changePassword(User user, ChangePasswordRequest request) {
 //        validate password
         //TODO
@@ -221,4 +212,43 @@ public class UserService {
         user.setPassword(hash);
         userRepository.save(user);
     }
+
+    public List<UserResponse> getAllFriend(UserRequest request) {
+        User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new NotFoundException("User not found with " +request.getUserId()));
+        return friendRepository.findAllFriends(user).stream()
+                .map(this::mapToUserResponse)
+                .collect(Collectors.toList());
+    }
+
+    public void sendFriendResponse(FriendRequest friendRequest, UserRequest userRequest) {
+        User userId = userRepository.findById(userRequest.getUserId())
+                .orElseThrow(() -> new NotFoundException("User not found"));
+        User friendId = userRepository.findById(userRequest.getUserId())
+                .orElseThrow(() -> new NotFoundException("User not found"));
+        Friend existsFriend = friendRepository.findByUserAndFriend(userId, friendId);
+        if (existsFriend == null) {
+            Friend friend = new Friend(userId, friendId, FriendStatus.PENDING);
+            friendRepository.save(friend);
+        } else {
+            throw new IllegalArgumentException("Friend request already sent");
+        }
+    }
+
+    private UserResponse mapToUserResponse(Friend friend) {
+        UserResponse userResponse = new UserResponse();
+
+        userResponse.setId(userResponse.getId());
+        userResponse.setEmail(userResponse.getEmail());
+        userResponse.setUsername(userResponse.getUsername());
+        userResponse.setDob(userResponse.getDob());
+        userResponse.setGender(userResponse.getGender());
+        userResponse.setAvatar(userResponse.getAvatar());
+        userResponse.setAddress(userResponse.getAddress());
+        userResponse.setPhone(userResponse.getPhone());
+
+        return userResponse;
+
+    }
+
 }

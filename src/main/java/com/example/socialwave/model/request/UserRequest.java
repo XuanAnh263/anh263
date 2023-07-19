@@ -15,6 +15,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserRequest {
+    Long userId;
     @Email(message = "Invalid email format")
     @NotBlank(message = "Email existed")
     String email;
