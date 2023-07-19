@@ -144,11 +144,11 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
-    public void sendOtpEmail(String email) {
+    public void sendOtpEmail(ResetPasswordRequest request) {
+        String email = request.getEmail();
         Optional<User> userOptional = userRepository.findByEmail(email);
-        System.out.println(userOptional);
+
         if (userOptional.isEmpty()) {
-            System.out.println("lôi");
             throw new NotFoundException("User with email " + email + " not found");
         }
 
@@ -177,12 +177,13 @@ public class UserService {
         }
 
 //        boolean isVerified = otpVerificationService.verifyOtp(email, otpCode, sessionId);
+//        System.out.println("verify" + isVerified);
 //        if (!isVerified) {
 //            throw new InvalidOtpException("Invalid OTP code");
 //        }
         try {
             userOptional.ifPresent(user -> {
-                user.setPassword(newPassword);
+                user.setPassword(passwordEncoder.encode(request.getNewPassword()));
                 userRepository.save(user);
             });
         } catch (Exception e) {

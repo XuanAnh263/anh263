@@ -2,17 +2,25 @@ package com.example.socialwave.service;
 
 import com.example.socialwave.entity.Friend;
 import com.example.socialwave.entity.User;
+import com.example.socialwave.exception.BadRequestException;
+import com.example.socialwave.exception.NotFoundException;
 import com.example.socialwave.model.request.FriendRequest;
 import com.example.socialwave.model.response.FriendResponse;
+import com.example.socialwave.model.response.UserResponse;
 import com.example.socialwave.repository.FriendRepository;
 import com.example.socialwave.repository.UserRepository;
 import com.example.socialwave.statics.FriendStatus;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -20,36 +28,38 @@ import java.util.Optional;
 public class FriendService {
     UserRepository userRepository;
     FriendRepository friendRepository;
+    ObjectMapper objectMapper;
 
-    public Optional<FriendResponse> addFriend(FriendRequest request) {
-        Long friendId = request.getFriendId();
-        Long userId = request.getUserId();
+    public List<FriendResponse> getAll() {
+        List<Friend> friendList = friendRepository.findAll();
+        if (!CollectionUtils.isEmpty(friendList)) {
+            return friendList.stream().map(friend -> objectMapper.convertValue(friend, FriendResponse.class)).collect(Collectors.toList());
+        }
+        return Collections.emptyList();
+    }
 
-//        if (friendRepository.existsByUserIdAndFriendId(userId, friendId)) {
-//            return new FriendResponse("These users are already friends");
-//        }
-//
-//        User user = userRepository.findById(userId).orElseThrow(() -> (new  RuntimeException("User not found")));
-//        User friend = userRepository.findById(friendId).orElseThrow(() -> (new  RuntimeException("User not found")));
-//
+    public Optional<FriendResponse> addFriend(FriendResponse friendResponse) {
+        User friendId = friendResponse.getFriendId();
+        User userId = friendResponse.getUserId();
+
         if (userId == null || friendId == null) {
-            return Optional.empty();
+            return Optional.of(new FriendResponse(FriendStatus.FAILURE));
         }
 
-        Optional<User> userOptional = userRepository.findById(userId);
-        Optional<User> friendOptional = userRepository.findById(friendId);
+        Optional<User> userOptional = userRepository.findById(userId.getId());
+        Optional<User> friendOptional = userRepository.findById(friendId.getId());
 
         if (userOptional.isEmpty() || friendOptional.isEmpty()) {
-            return Optional.empty();
+            return Optional.of(new FriendResponse(FriendStatus.FAILURE));
         }
+
         Friend friendShip = new Friend();
         friendShip.setUserId(userOptional.get());
         friendShip.setFriendId(friendOptional.get());
 
         friendRepository.save(friendShip);
 
-        return Optional.of(new FriendResponse(userId,FriendStatus.SUCCESS));
-
+        return Optional.of(new FriendResponse(FriendStatus.SUCCESS));
     }
 
 

@@ -24,6 +24,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -105,40 +106,23 @@ public class AuthenticationController {
         return ResponseEntity.ok(null);
     }
 
-
-
-//    @PostMapping("/reset-password")
-//    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request) {
-//        return Optional.ofNullable(userService.resetPassword(request))
-//                .map(user -> {
-//                        otpService.sendOtpEmail(request.getEmail(), request.getOtpCode());
-//                        return  ResponseEntity.ok("Reset password successful. OTp has been sent to your email");
-//                }).orElse(ResponseEntity.badRequest().body("user not found"));
-//    }
-//    @PostMapping("/verify-otp")
-//    public ResponseEntity<?> verifyOtp(@RequestBody OtpVerificationRequest request) {
-//        return ResponseEntity.ok(otpVerificationService.verifyOtp()
-//    }
-//    @PostMapping("/email-check")
-//    public ResponseEntity<Boolean> existByEmail(@RequestBody ExistedEmailRequest request) {
-//        return ResponseEntity.ok(userService.existsByEmail(request.getEmail()));
-//    }
-
-    @PostMapping("/{email}/otp-sending")
-    public void sendOtp(@PathVariable String email) {
+    @PostMapping("/otp-sending")
+    public ResponseEntity<?> sendOtp(@RequestBody ResetPasswordRequest request) {
         try {
-            userService.sendOtpEmail(email);
-        } catch (Exception e) {
-            System.out.println("lỗi send email");
+            userService.sendOtpEmail(request);
+            return ResponseEntity.ok("send otp successful");
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (EmailSendingException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
     }
 
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request) {
         try {
-//            userService.sendOtpEmail(request.getEmail());
             userService.resetPassword(request);
-            return ResponseEntity.ok("OTP email sent successfully");
+            return ResponseEntity.ok("Reset password successfully");
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (EmailSendingException e) {
