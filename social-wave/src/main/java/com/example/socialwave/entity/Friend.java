@@ -21,18 +21,23 @@ public class Friend {
 
     @ManyToOne(targetEntity = User.class)
             @JoinColumn(name = "user_id")
-    User userId;
+    User user;
 
     @ManyToOne(targetEntity = User.class)
             @JoinColumn(name = "friend_id")
-    User friendId;
+    User friend;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     FriendStatus status;
 
-    public Friend(User userId, User friendId) {
-        this.userId = userId;
-        this.friendId = friendId;
+
+
+    public Friend(User user, User friend, FriendStatus status) {
+        this.user = user;
+        this.friend = friend;
+        this.status = status;
     }
+
+
 }

@@ -16,20 +16,20 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-@ToString
-
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+
 public class MessageRequest {
 
-    Conversation conversation;
+    Long conversation;
 
-    User senderId;
+
+    Long sender;
 
     Sticker sticker;
 
-    @NotNull
+
     MessageType type;
 
     @NotBlank(message = "Content text is required")
@@ -48,7 +48,7 @@ public class MessageRequest {
 
     Long replyToMessageId;
 
-    @NotNull
+
     MessageStatus status;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

@@ -28,5 +28,5 @@ public class MessageFile {
 
     @ManyToOne(targetEntity = User.class)
             @JoinColumn(name = "creator_id")
-    User creatorId;
+    User creator;
 }

@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
-      th:replace="layout/layout :: main-fragment(~{:: title}, ~{}, ~{:: .layout }, ~{})">
+      th:replace="layout/layout :: main-fragment(~{:: title}, ~{}, ~{:: .layout }, ~{:: #js})">
 
     <!-- Head -->
     <head>
@@ -12,7 +12,7 @@
 
     <body>
 
-        <div class="layout">
+        <div class="layout" id="conversation-content" style="visibility: hidden">
 
             <!--nav-->
             <th:block th:replace="fragments/nav :: nav"></th:block>
@@ -52,7 +52,7 @@
                                     <div class="col-6 col-xl-6">
                                         <div class="media text-center text-xl-left">
                                             <div class="avatar avatar-sm avatar-online d-none d-lg-inline-block mr-5">
-                                                <img src="assets\images\avatars\10.jpg" class="avatar-img" alt="">
+                                                <img src="assets/images/avatars/10.jpg" class="avatar-img" alt="">
                                             </div>
 
                                             <div class="media-body align-self-center text-truncate">
@@ -128,13 +128,13 @@
 
                         <!-- Chat: Content-->
                         <div class="chat-content px-lg-8">
-                            <div class="container-xxl py-6 py-lg-10">
+                            <div class="container-xxl py-6 py-lg-10" id="content-chat">
 
                                 <!-- Message -->
                                 <div class="message">
                                     <!-- Avatar -->
                                     <a class="avatar avatar-sm mr-4 mr-lg-5" href="#" data-chat-sidebar-toggle="#chat-2-info">
-                                        <img class="avatar-img" src="assets\images\avatars\10.jpg" alt="">
+                                        <img class="avatar-img" src="assets/images/avatars/10.jpg" alt="">
                                     </a>
 
                                     <!-- Message: body -->
@@ -208,7 +208,7 @@
                                 <div class="message">
                                     <!-- Avatar -->
                                     <a class="avatar avatar-sm mr-4 mr-lg-5" href="#" data-chat-sidebar-toggle="#chat-2-info">
-                                        <img class="avatar-img" src="assets\images\avatars\10.jpg" alt="">
+                                        <img class="avatar-img" src="assets/images/avatars/10.jpg" alt="">
                                     </a>
 
                                     <!-- Message: body -->
@@ -263,14 +263,14 @@
                                                 <!-- Emoji button -->
                                                 <div class="input-group-append">
                                                     <button class="btn btn-ico btn-secondary btn-minimal bg-transparent border-0" type="button" data-emoji-btn="">
-                                                        <img src="assets\images\smile.svg" data-inject-svg="" alt="">
+                                                        <img src="assets/images/smile.svg" data-inject-svg="" alt="">
                                                     </button>
                                                 </div>
 
                                                 <!-- Upload button -->
                                                 <div class="input-group-append">
                                                     <button id="chat-upload-btn-2" class="btn btn-ico btn-secondary btn-minimal bg-transparent border-0 dropzone-button-js" type="button">
-                                                        <img src="assets\images\paperclip.svg" data-inject-svg="" alt="">
+                                                        <img src="assets/images/paperclip.svg" data-inject-svg="" alt="">
                                                     </button>
                                                 </div>
 
@@ -312,7 +312,7 @@
                                 <div class="border-bottom text-center py-9 px-10" >
                                     <!-- Photo -->
                                     <div class="avatar avatar-xl mx-5 mb-5">
-                                        <img class="avatar-img" src="assets\images\avatars\10.jpg" alt="">
+                                        <img class="avatar-img" src="assets/images/avatars/10.jpg" alt="">
                                     </div>
                                     <h5>Anna Bridges</h5>
                                     <p class="text-muted">Bootstrap is an open source toolkit for developing web with HTML, CSS, and JS.</p>
@@ -426,8 +426,133 @@
 
         </div>
         <!-- Layout -->
-<!--        <th:block th:replace="fragments/content-chat :: content-chat"></th:block>-->
+
+        <th:block th:replace="fragments/dropzone :: dropzone"></th:block>
+
 
 
     </body>
+<th:block id="js">
+<!--    <script>-->
+<!--        // Hàm để lấy dữ liệu từ endpoint và hiển thị lên trang web-->
+<!--        function getMessagesInConversation(conversationId) {-->
+<!--            $.ajax({-->
+<!--                url: `/api/v1/messages/${conversationId}`,-->
+<!--                type: "GET",-->
+<!--                dataType: "json",-->
+<!--                success: function (data) {-->
+<!--                    const chatContentDiv = $("#content-chat");-->
+<!--                    chatContentDiv.empty(); // Xóa nội dung cũ-->
+
+<!--                    $.each(data, function (index, message) {-->
+<!--                        const messageDiv = `-->
+<!--            <div class="message">-->
+<!--              <a class="avatar avatar-sm mr-4 mr-lg-5" href="#" data-chat-sidebar-toggle="#chat-2-info">-->
+<!--                <img class="avatar-img" src="assets/images/avatars/10.jpg" alt="">-->
+<!--              </a>-->
+<!--              <div class="message-body">-->
+<!--                <div class="message-row">-->
+<!--                  <div class="d-flex align-items-center">-->
+<!--                    <div class="message-content bg-light">-->
+<!--                      <h6 class="mb-2">${message.sender}</h6>-->
+<!--                      <div>${message.contentText}</div>-->
+<!--                      <div class="mt-1">-->
+<!--                        <small class="opacity-65">${message.timestamp}</small>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          `;-->
+<!--                        chatContentDiv.append(messageDiv);-->
+<!--                    });-->
+<!--                },-->
+<!--                error: function (error) {-->
+<!--                    console.error("Error:", error);-->
+<!--                },-->
+<!--            });-->
+<!--        }-->
+
+<!--        // Gọi hàm để lấy dữ liệu và hiển thị nội dung chat khi trang web được load-->
+<!--        $(document).ready(function () {-->
+<!--            $("#conversationList a").on("click", function () {-->
+<!--                const conversationId = $(this).data("conversation-id");-->
+<!--                getMessagesInConversation(conversationId);-->
+<!--            });-->
+<!--        });-->
+<!--    </script>-->
+
+    <script>
+        function getConversations() {
+            let jwtToken = localStorage.getItem("jwtToken");
+
+            if (jwtToken) {
+                $.ajax({
+                    url: "/api/v1/conversations",
+                    type: "GET",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", "Bearer " + jwtToken);
+                    },
+                    success: function (data) {
+                        updateConversationList(data);
+                        document.getElementById("conversation-content").style.visibility = "visible";
+                    },
+                    error: function () {
+                        toastr.error("Error while fetching conversations!");
+                    }
+                });
+            } else {
+                toastr.warning("Please log in again!");
+                document.getElementById("conversation-content").style.visibility = "hidden";
+                window.location.href = 'http://localhost:8080/signin';
+
+            }
+
+        }
+
+        // Hàm để cập nhật danh sách cuộc trò chuyện trong thẻ nav
+        function updateConversationList(conversations) {
+            let conversationList = $("#conversationList");
+            // conversationList.empty();
+
+            conversations.forEach(function (conversation) {
+                let chatLink = `
+      <a class="onversation-link text-reset nav-link p-0 mb-6" href="./chat${conversation.id}">
+        <div class="card card-active-listener">
+          <div class="card-body">
+            <div class="media">
+              <div class="avatar mr-5">
+                <img class="avatar-img" src="${conversation.avatar}" alt="Avatar">
+              </div>
+              <div class="media-body overflow-hidden">
+                <div class="d-flex align-items-center mb-1">
+                    <h6 class="text-truncate mb-0 mr-auto">${conversation.name}</h6>
+                    <p class="small text-muted text-nowrap ml-4">${conversation.lastModifiDateTime}</p>
+                </div>
+                <div class="text-truncate">${conversation.description}</div>
+              </div>
+            </div>
+          </div>
+          <div class="badge badge-circle badge-primary badge-border-light badge-top-right">
+            <span>3</span>
+          </div>
+        </div>
+
+      </a>
+    `;
+
+
+                conversationList.append(chatLink);
+            });
+        }
+
+        // Gọi hàm để lấy danh sách cuộc trò chuyện khi trang web được tải
+        $(document).ready(function () {
+            let jwtToken = localStorage.getItem("jwtToken");
+            getConversations(jwtToken);
+
+        });
+    </script>
+</th:block>
 </html>

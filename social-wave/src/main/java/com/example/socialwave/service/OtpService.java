@@ -3,6 +3,7 @@ package com.example.socialwave.service;
 
 import com.example.socialwave.entity.Otp;
 import com.example.socialwave.entity.User;
+import com.example.socialwave.model.response.OtpVerificationResponse;
 import com.example.socialwave.repository.OtpRepository;
 import com.example.socialwave.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.Random;
 import java.util.UUID;
@@ -32,31 +34,47 @@ public class OtpService {
         this.userRepository = userRepository;
     }
 
-    @Value("${spring.mail.username}")
-    private String sender;
 
-    public void sendOtpEmail(String email) {
-        SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setFrom(sender);
-        mailMessage.setTo(email);
-        mailMessage.setSubject("Reset Password OTP");
-        mailMessage.setText("Your OTP: " + generateOtp());
-        javaMailSender.send(mailMessage);
 
+//    public Otp generateOtp() {
+////        Random random = new Random();
+////
+////        int otpNumber = random.nextInt(900000) + 100000;
+////        String code = String.valueOf(otpNumber);
+////
+////        Otp otp = new Otp();
+////        otp.setCode(code);
+////        otp.setSessionId(UUID.randomUUID());
+////        otp.setExpiry(LocalDateTime.now().plusMinutes(15));
+////        otp.setCreatDateTime(LocalDateTime.now());
+////        return otpRepository.save(otp);
+//
+//    }
+    public String generateOtp() {
+    StringBuilder otp = new StringBuilder();
+
+    String OTP_CHARACTERS = "0123456789QWERTYUIOPASDFGHJKLZXCVBNM";
+
+    Random random = new Random();
+    for (int i = 0; i < 6; i++) {
+        int index = random.nextInt(OTP_CHARACTERS.length());
+        otp.append(OTP_CHARACTERS.charAt(index));
     }
 
-    public Otp generateOtp() {
-        Random random = new Random();
+    return otp.toString();
+    }
 
-        int otpNumber = random.nextInt(900000) + 100000;
-        String code = String.valueOf(otpNumber);
-
-        Otp otp = new Otp();
-        otp.setCode(code);
-        otp.setSessionId(UUID.randomUUID());
-        otp.setExpiry(LocalDateTime.now().plusMinutes(15));
-        otp.setCreatDateTime(LocalDateTime.now());
-        return otpRepository.save(otp);
+    public OtpVerificationResponse verifyOtp(String code) {
+        Optional<Otp> optional=otpRepository.findByCode(code);
+        if (optional.isPresent()){
+            Otp otp=optional.get();
+            return OtpVerificationResponse.builder()
+                    .code(otp.getCode())
+                    .expiry(LocalDateTime.now().plusMinutes(15))
+                    .sessionId(UUID.randomUUID())
+                    .build();
+        }
+        return null;
     }
 
 }

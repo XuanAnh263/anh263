@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--TODO: chưa dùng tới. để xem lại ko thì xoá-->
+<div class="card-profile" th:fragment="card-profile">
+  <div class="tab-pane fade h-100" id="tab-content-demos" role="tabpanel">
+    <div class="d-flex flex-column h-100">
+
+      <div class="hide-scrollbar">
+        <div class="container-fluid py-6">
+
+          <!-- Card -->
+          <div class="card mb-6">
+            <div class="card-body">
+
+              <div class="media align-items-center">
+                <div class="mr-5">
+                  <img src="assets\images\brand.svg" class="fill-primary" data-inject-svg="" alt="" style="height: 46px; width: 46px;">
+                </div>
+                <div class="media-body">
+                  <h5 class="mb-0">
+                    <a href="documentation\index.html" class="text-basic-inverse stretched-link">Documentation</a>
+                  </h5>
+                  <p>Quick setup and build tools.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!-- Card -->
+
+          <h5 class="my-6">Chat Pages:</h5>
+
+          <!-- Card -->
+          <div class="card mb-6">
+            <img class="card-img-top" alt="" src="assets\images\demos\chat.jpg">
+            <div class="card-body border-top">
+              <div class="media">
+                <div class="media-body">
+                  <h5 class="mb-0">Light mode</h5>
+                </div>
+                <div class="align-self-center">
+                  <a href="demo-light\index.htm" class="text-muted stretched-link">
+                    <i class="fe-link"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Card -->
+
+          <!-- Card -->
+          <div class="card mb-6">
+            <img class="card-img-top" alt="" src="assets\images\demos\chat-dark.jpg">
+            <div class="card-body border-top">
+              <div class="media">
+                <div class="media-body">
+                  <h5 class="mb-0">Dark mode</h5>
+                </div>
+                <div class="align-self-center">
+                  <a href="demo-dark\index.htm" class="text-muted stretched-link">
+                    <i class="fe-link"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Card -->
+
+          <h5 class="my-6">Account Pages:</h5>
+
+          <!-- Card -->
+          <div class="card mb-6">
+            <img class="card-img-top" alt="" src="assets\images\demos\sign-in-dark.jpg">
+            <div class="card-body border-top">
+              <div class="media">
+                <div class="media-body">
+                  <h5 class="mb-0">Sign In</h5>
+                </div>
+                <div class="align-self-center">
+                  <a href="signin.html" class="text-muted stretched-link">
+                    <i class="fe-link"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Card -->
+
+          <!-- Card -->
+          <div class="card mb-6">
+            <img class="card-img-top" alt="" src="assets\images\demos\sign-up-dark.jpg">
+            <div class="card-body border-top">
+              <div class="media">
+                <div class="media-body">
+                  <h5 class="mb-0">Sign Up</h5>
+                </div>
+                <div class="align-self-center">
+                  <a href="signup.html" class="text-muted stretched-link">
+                    <i class="fe-link"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Card -->
+
+          <!-- Card -->
+          <div class="card mb-6">
+            <img class="card-img-top" alt="" src="assets\images\demos\password-reset-dark.jpg">
+            <div class="card-body border-top">
+              <div class="media">
+                <div class="media-body">
+                  <h5 class="mb-0">Password Reset</h5>
+                </div>
+                <div class="align-self-center">
+                  <a href="password-reset.html" class="text-muted stretched-link">
+                    <i class="fe-link"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Card -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-pane fade h-100" id="tab-content-user" role="tabpanel">
+    <div class="d-flex flex-column h-100">
+
+      <div class="hide-scrollbar">
+        <div class="container-fluid py-6">
+
+          <!-- Title -->
+          <h2 class="font-bold mb-6">Profile</h2>
+          <!-- Title -->
+
+          <!-- Search -->
+          <form class="mb-6">
+            <div class="input-group">
+              <input type="text" class="form-control form-control-lg" placeholder="Search for messages or users..." aria-label="Search for messages or users...">
+              <div class="input-group-append">
+                <button class="btn btn-lg btn-ico btn-secondary btn-minimal" type="submit">
+                  <i class="fe-search"></i>
+                </button>
+              </div>
+            </div>
+          </form>
+          <!-- Search -->
+
+          <!-- Card -->
+          <div class="card mb-6">
+            <div class="card-body">
+              <div class="text-center py-6">
+                <!-- Photo -->
+                <div class="avatar avatar-xl mb-5">
+                  <img class="avatar-img" src="assets\images\avatars\12.jpg" alt="">
+                </div>
+
+                <h5>Matthew Wiggins</h5>
+                <p class="text-muted">Bootstrap is an open source toolkit for developing web with HTML.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Card -->
+
+          <!-- Card -->
+          <div class="card mb-6">
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item px-0 py-6">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <p class="small text-muted mb-0">Country</p>
+                      <p>Warsaw, Poland</p>
+                    </div>
+                    <i class="text-muted icon-sm fe-globe"></i>
+                  </div>
+                </li>
+
+                <li class="list-group-item px-0 py-6">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <p class="small text-muted mb-0">Phone</p>
+                      <p>+39 02 87 21 43 19</p>
+                    </div>
+                    <i class="text-muted icon-sm fe-mic"></i>
+                  </div>
+                </li>
+
+                <li class="list-group-item px-0 py-6">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <p class="small text-muted mb-0">Email</p>
+                      <p>anna@gmail.com</p>
+                    </div>
+                    <i class="text-muted icon-sm fe-mail"></i>
+                  </div>
+                </li>
+
+                <li class="list-group-item px-0 py-6">
+                  <div class="media align-items-center">
+                    <div class="media-body">
+                      <p class="small text-muted mb-0">Time</p>
+                      <p>10:03 am</p>
+                    </div>
+                    <i class="text-muted icon-sm fe-clock"></i>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- Card -->
+
+          <!-- Card -->
+          <div class="card mb-6">
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item px-0 py-6">
+                  <a href="#" class="media text-muted">
+                    <div class="media-body align-self-center">
+                      Twitter
+                    </div>
+                    <i class="icon-sm fe-twitter"></i>
+                  </a>
+                </li>
+
+                <li class="list-group-item px-0 py-6">
+                  <a href="#" class="media text-muted">
+                    <div class="media-body align-self-center">
+                      Facebook
+                    </div>
+                    <i class="icon-sm fe-facebook"></i>
+                  </a>
+                </li>
+
+                <li class="list-group-item px-0 py-6">
+                  <a href="#" class="media text-muted">
+                    <div class="media-body align-self-center">
+                      Github
+                    </div>
+                    <i class="icon-sm fe-github"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- Card -->
+
+          <div class="form-row">
+            <div class="col">
+              <!-- Button -->
+              <button type="button" class="btn btn-lg btn-block btn-basic d-flex align-items-center">
+                Settings
+                <span class="fe-settings ml-auto"></span>
+              </button>
+            </div>
+
+            <div class="col">
+              <!-- Button -->
+              <button type="button" class="btn btn-lg btn-block btn-basic d-flex align-items-center">
+                Logout
+                <span class="fe-log-out ml-auto"></span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+  </div>
+</div>
+</body>
+</html>

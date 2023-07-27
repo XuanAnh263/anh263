@@ -10,6 +10,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -27,6 +29,9 @@ public class Conversation {
     @Column(name = "name")
     String name;
 
+    @Column(name = "avatar")
+    String avatar;
+
     @Column(name = "description")
     String description;
 
@@ -43,4 +48,40 @@ public class Conversation {
 
     @LastModifiedDate
     LocalDateTime lastModifiedDateTime;
+
+    Long ownerId;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "participant",
+            joinColumns = @JoinColumn(name = "conversation_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+     Set<User> users = new HashSet<>();
+
+    public Conversation(Long id) {
+        this.id =  id;
+    }
+
+    public Conversation(Long id,String name, String avatar, String description, Long ownerId) {
+        this.id = id;
+        this.name = name;
+        this.avatar = avatar;
+        this.description = description;
+        this.ownerId = ownerId;
+    }
+
+
+
+    public void addUser(User user) {
+        this.users.add(user);
+        user.getConversations().add(this);
+    }
+
+    public void removeUser(User user) {
+        this.users.remove(user);
+        user.getConversations().remove(this);
+    }
+
+
 }

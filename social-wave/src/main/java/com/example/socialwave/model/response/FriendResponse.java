@@ -13,17 +13,8 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class FriendResponse {
-    User userId;
-    User friendId;
+    Long id;
+    UserResponse user;
+    UserResponse friend;
     FriendStatus status;
-    String message;
-
-//    public FriendResponse(FriendStatus status, String message) {
-//        this.status = status;
-//        this.message = message;
-//    }
-
-    public FriendResponse(FriendStatus status) {
-        this.status = status;
-    }
 }

@@ -2,7 +2,6 @@ package com.example.socialwave.controller;
 
 import com.example.socialwave.entity.RefreshToken;
 import com.example.socialwave.exception.EmailSendingException;
-import com.example.socialwave.exception.InvalidOtpException;
 import com.example.socialwave.exception.NotFoundException;
 import com.example.socialwave.exception.RefreshTokenNotFoundException;
 import com.example.socialwave.model.request.*;
@@ -106,6 +105,11 @@ public class AuthenticationController {
         return ResponseEntity.ok(null);
     }
 
+    @PostMapping("/check-email")
+    public ResponseEntity<?> existsByEmail(@RequestBody ExistedEmailRequest request) {
+        return ResponseEntity.ok(userService.existsByEmail(request.getEmail()));
+    }
+
     @PostMapping("/otp-sending")
     public ResponseEntity<?> sendOtp(@RequestBody ResetPasswordRequest request) {
         try {
@@ -116,6 +120,11 @@ public class AuthenticationController {
         } catch (EmailSendingException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
+    }
+
+    @PostMapping("/verify-otp")
+    public ResponseEntity<?> verifyOtp(@RequestBody OtpVerificationRequest request) {
+        return ResponseEntity.ok(otpService.verifyOtp(request.getCode()));
     }
 
     @PostMapping("/reset-password")

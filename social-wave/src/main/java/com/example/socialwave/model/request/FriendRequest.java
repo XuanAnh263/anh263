@@ -1,10 +1,7 @@
 package com.example.socialwave.model.request;
 
-import com.example.socialwave.entity.User;
-import com.example.socialwave.statics.FriendStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
 @Data
 @Builder
 @ToString
@@ -12,9 +9,9 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class FriendRequest {
+        String username;
+        Long friend;
+        Long user;
 
-    User userId;
-    User friendId;
-    FriendStatus status;
 
 }

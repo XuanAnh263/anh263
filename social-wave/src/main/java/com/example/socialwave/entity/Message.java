@@ -20,17 +20,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Message {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @ManyToOne(targetEntity = Conversation.class)
+    @ManyToOne(targetEntity = Conversation.class, cascade = CascadeType.ALL)
             @JoinColumn(name = "conversation_id")
     Conversation conversation;
 
     @ManyToOne(targetEntity = User.class)
             @JoinColumn(name = "sender_id")
-    User senderId;
+    User sender;
 
     @ManyToOne(targetEntity = Sticker.class)
             @JoinColumn(name = "sticker_id")
@@ -67,4 +68,19 @@ public class Message {
 
     @LastModifiedDate
     LocalDateTime lastModifiedDateTime;
+
+    public Message(Conversation conversation, User sender, MessageType type, String contentText, String contentRickText, Boolean mentioned, Boolean deleted, Boolean edited, Long replyToMessageId, MessageStatus status, LocalDateTime creatDateTime, LocalDateTime lastModifiedDateTime) {
+        this.conversation = conversation;
+        this.sender = sender;
+        this.type = type;
+        this.contentText = contentText;
+        this.contentRickText = contentRickText;
+        this.mentioned = mentioned;
+        this.deleted = deleted;
+        this.edited = edited;
+        this.replyToMessageId = replyToMessageId;
+        this.status = status;
+        this.creatDateTime = creatDateTime;
+        this.lastModifiedDateTime = lastModifiedDateTime;
+    }
 }

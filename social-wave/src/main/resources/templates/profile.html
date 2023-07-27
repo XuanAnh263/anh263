@@ -166,7 +166,7 @@
   <script>
     $(document).ready(function () {
       function getToken() {
-        return localStorage.getItem('jwtToken')
+        return localStorage.getItem('jwtToken');
       }
       $('.log-out-btn').click(function () {
         let jwtToken = getToken();

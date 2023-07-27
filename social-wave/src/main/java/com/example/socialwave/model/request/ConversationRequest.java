@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Builder
@@ -18,8 +19,13 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ConversationRequest {
+
+    Long id;
     @NotBlank(message = "Conversation name is required")
     String name;
+
+    @NotBlank(message = "Conversation avatar is required")
+    String avatar;
 
     @NotBlank(message = "Conversation description is required")
     String description;
@@ -37,4 +43,8 @@ public class ConversationRequest {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @NotNull(message = "Update is required")
     LocalDateTime lastModifiedDateTime;
+
+    Set<Long> userIds;
+
+    Long ownerId;
 }

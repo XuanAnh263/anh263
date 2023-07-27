@@ -12,7 +12,7 @@
 
       <!-- Brand -->
       <a th:href="@{/}" class="d-none d-xl-block mb-6">
-        <img src="assets\images\brand.svg" class="mx-auto fill-primary" data-inject-svg="" alt="" style="height: 46px;">
+        <img th:src="@{/assets/images/brand.svg}" class="mx-auto fill-primary" data-inject-svg="" alt="" style="height: 46px;">
       </a>
 
       <!-- Menu -->
@@ -33,15 +33,15 @@
         </li>
 
         <!-- Friend -->
-        <li class="nav-item mt-xl-9">
-          <a class="nav-link position-relative p-0 py-xl-3" href="./friend" title="Friends" >
+        <li class="nav-item mt-xl-9 friend-btn" >
+          <a class="nav-link position-relative p-0 py-xl-3" th:href="@{/friends}" title="Friends" >
             <i class="icon-lg fe-users"></i>
           </a>
         </li>
 
         <!-- Chats -->
-        <li class="nav-item mt-xl-9">
-          <a class="nav-link position-relative p-0 py-xl-3 active" href="/" title="Chats" >
+        <li class="nav-item mt-xl-9 conversation-btn">
+          <a class="nav-link position-relative p-0 py-xl-3 active" th:href="@{/conversations}" title="Chats" >
             <i class="icon-lg fe-message-square"></i>
             <div class="badge badge-dot badge-primary badge-bottom-center"></div>
           </a>
@@ -72,4 +72,6 @@
 
 </div>
 </body>
+
+
 </html>

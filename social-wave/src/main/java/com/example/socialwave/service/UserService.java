@@ -1,17 +1,21 @@
 package com.example.socialwave.service;
 
+import com.example.socialwave.entity.Friend;
 import com.example.socialwave.entity.Otp;
 import com.example.socialwave.entity.User;
 import com.example.socialwave.exception.*;
 import com.example.socialwave.model.request.*;
+import com.example.socialwave.model.response.FriendResponse;
 import com.example.socialwave.model.response.JwtResponse;
 import com.example.socialwave.model.response.UserResponse;
+import com.example.socialwave.repository.FriendRepository;
 import com.example.socialwave.repository.OtpRepository;
 import com.example.socialwave.repository.RefreshTokenRepository;
 import com.example.socialwave.repository.UserRepository;
 import com.example.socialwave.security.CustomUserDetails;
 import com.example.socialwave.security.JwtUtils;
 import com.example.socialwave.security.SecurityUtils;
+import com.example.socialwave.statics.FriendStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -44,6 +48,9 @@ public class UserService {
     final UserRepository userRepository;
 
     @Autowired
+    final FriendRepository friendRepository;
+
+    @Autowired
     OtpRepository otpRepository;
     final ObjectMapper objectMapper;
 
@@ -51,7 +58,7 @@ public class UserService {
     final RefreshTokenRepository refreshTokenRepository;
 
     @Autowired
-    OtpService otpService;
+    EmailService emailService;
     OtpVerificationService otpVerificationService;
 
     @Value("${application.security.refreshToken.tokenValidityMilliseconds}")
@@ -61,13 +68,14 @@ public class UserService {
     final JwtUtils jwtUtils;
 
     public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository,
-                       ObjectMapper objectMapper,
+                       ObjectMapper objectMapper, FriendRepository friendRepository,
                        RefreshTokenRepository refreshTokenRepository, JwtUtils jwtUtils) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.objectMapper = objectMapper;
         this.refreshTokenRepository = refreshTokenRepository;
         this.jwtUtils = jwtUtils;
+        this.friendRepository = friendRepository;
     }
 
     public void signUpRequest(SignUpRequest request) {
@@ -152,13 +160,13 @@ public class UserService {
             throw new NotFoundException("User with email " + email + " not found");
         }
 
-        Otp otp = otpService.generateOtp();
-        if (LocalDateTime.now().isAfter(otp.getExpiry())) {
-            throw new InvalidOtpException("Otp expired");
-        }
+//        Otp otp = otpService.verifyOtp();
+//        if (LocalDateTime.now().isAfter(otp.getExpiry())) {
+//            throw new InvalidOtpException("Otp expired");
+//        }
 
         try {
-            otpService.sendOtpEmail(email);
+            emailService.sendOtpEmail(email);
         } catch (Exception e) {
             throw new EmailSendingException("Failed to send OTP email",e);
         }
@@ -167,7 +175,7 @@ public class UserService {
 
     public void resetPassword(ResetPasswordRequest request) {
         String email = request.getEmail();
-        String otpCode = request.getOtpCode();;
+        String code = request.getCode();;
         UUID sessionId = request.getSessionId();
         String newPassword = request.getNewPassword();
 
@@ -191,26 +199,9 @@ public class UserService {
             throw new PasswordUpdateException("Failed to update password", e);
         }
 
-//        Optional<User> userOptional = userRepository.findByEmail(request.getEmail());
-//        try {
-//            userOptional.ifPresent(user -> {
-//                user.setPassword(passwordEncoder.encode(request.getNewPassword()));
-//                userRepository.save(user);
-//            });
-//        }catch (Exception e) {
-//            throw new PasswordUpdateException("Failed to update password", e);
-//        }
+
 
     }
-
-
-
-//    public void sendOtpEmail(String email) {
-//        otpService.sendOtpEmail(email);
-//    }
-
-
-
     public void changePassword(User user, ChangePasswordRequest request) {
 //        validate password
         //TODO
@@ -221,4 +212,10 @@ public class UserService {
         user.setPassword(hash);
         userRepository.save(user);
     }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(null);
+    }
+
+
 }
