@@ -1,5 +1,6 @@
 package com.example.socialwave.security;
 
+import com.example.socialwave.entity.User;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.slf4j.Logger;
@@ -38,14 +39,18 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 String email = jwtUtils.getUserNameFromJwtToken(jwt);
 
                 UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities());
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                if (userDetails != null) {
+                    UsernamePasswordAuthenticationToken authentication =
+                            new UsernamePasswordAuthenticationToken(
+                                    userDetails,
+                                    null,
+                                    userDetails.getAuthorities());
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+
+                }
+
             }
         } catch (Exception e) {
             logger.error("Cannot set user authentication: {}", e);
@@ -63,4 +68,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
         return null;
     }
+
+
 }

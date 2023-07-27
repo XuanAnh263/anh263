@@ -10,24 +10,15 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-
+@Data
 @Builder
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class OtpVerificationRequest extends BaseRequest {
-
-
-    User user;
-    Otp otp;
-    UUID session;
-    OtpStatus status;
-
-    @NotNull(message = "success is required")
-    Boolean success;
-
-
-    LocalDateTime verificationTime;
+    String email;
+    String code;
+    UUID sessionId;
 
 }
