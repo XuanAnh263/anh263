@@ -7,7 +7,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ConversationType {
     PERSONAL("Personal"),
-    GROUP("Group"),
-    PUBLIC("Public");
+    GROUP("Group");
     String type;
 }

@@ -26,4 +26,5 @@ public class ConversationResponse {
     LocalDateTime lastModifiedDateTime;
     Set<Long> userIds;
     Long ownerId;
+
 }

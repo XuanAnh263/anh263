@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -61,6 +62,12 @@ public class HomeController {
 
         return "password-reset";
     }
+
+    @GetMapping("/chat")
+    public String getChat() {
+
+        return "chat";
+    }
     @GetMapping("/chat-1")
     public String getChatOne() {
 
@@ -97,7 +104,7 @@ public class HomeController {
         return "profile";
     }
 
-    @PreAuthorize("isAuthenticated()")
+
     @GetMapping("/conversations")
     public String getConversation() {
 

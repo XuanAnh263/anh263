@@ -68,7 +68,8 @@ public class DatabaseInitializer implements CommandLineRunner {
         // Tạo danh sách bạn
         List<Friend> friendsToAdd = List.of(
                 new Friend(user1, user2, FriendStatus.ACCEPT),
-                new Friend(user1, user3, FriendStatus.ACCEPTED)
+                new Friend(user1, user3, FriendStatus.ACCEPTED),
+                new Friend(user1, user4, FriendStatus.ACCEPTED)
                 // Thêm các bạn khác vào danh sách nếu cần
         );
 
@@ -79,7 +80,10 @@ public class DatabaseInitializer implements CommandLineRunner {
 
         List<Conversation> conversationsToAdd = List.of(
                 new Conversation(1L,"Conversation 1", "avatar_url_1", "Description for Conversation 1", 1L),
-                new Conversation(2L,"Conversation 2", "avatar_url_2", "Description for Conversation 2",2L)
+                new Conversation(2L,"Conversation 2", "avatar_url_2", "Description for Conversation 2",2L),
+                new Conversation(3L,"Conversation 3", "avatar_url_3", "Description for Conversation 3",1L),
+                new Conversation(4L,"Conversation 4", "avatar_url_4", "Description for Conversation 4",1L),
+                new Conversation(5L,"Conversation 5", "avatar_url_5", "Description for Conversation 5",5L)
 
         );
 
@@ -90,18 +94,24 @@ public class DatabaseInitializer implements CommandLineRunner {
 
         Optional<Conversation> optionalConversation1 = conversationRepository.findById(1L);
         Optional<Conversation> optionalConversation2 = conversationRepository.findById(2L);
+        Optional<Conversation> optionalConversation3 = conversationRepository.findById(3L);
+        Optional<Conversation> optionalConversation4 = conversationRepository.findById(4L);
 
         Conversation conversation1 = optionalConversation1.orElseThrow(() -> new RuntimeException("Conversation not found"));
         Conversation conversation2 = optionalConversation2.orElseThrow(() -> new RuntimeException("Conversation not found"));
+        Conversation conversation3 = optionalConversation3.orElseThrow(() -> new RuntimeException("Conversation not found"));
+        Conversation conversation4 = optionalConversation4.orElseThrow(() -> new RuntimeException("Conversation not found"));
 
 
 
 
         // Create Messages
         List<Message> messagesToAdd = List.of(
-                new Message(conversation1, user1,  MessageType.TEXT, "xin chào contentText", "contentRickText", false, false, false, null, MessageStatus.SENT, LocalDateTime.now(), LocalDateTime.now()),
-                new Message(conversation1, user2,  MessageType.TEXT, "Hello! contentText", "contentRickText", false, false, false, null, MessageStatus.SENT, LocalDateTime.now(), LocalDateTime.now()),
-                new Message(conversation2, user1,  MessageType.TEXT, "hi friend contentText", "contentRickText", false, false, false, null, MessageStatus.SENT, LocalDateTime.now(), LocalDateTime.now())
+                new Message(conversation1, user1,  MessageType.TEXT, "xin chào contentText", "contentRickText_1", false, false, false, null, MessageStatus.SENT, LocalDateTime.now(), LocalDateTime.now()),
+                new Message(conversation1, user2,  MessageType.TEXT, "Hello! contentText", "contentRickText_2", false, false, false, null, MessageStatus.SENT, LocalDateTime.now(), LocalDateTime.now()),
+                new Message(conversation2, user1,  MessageType.TEXT, "hi friend contentText", "contentRickText", false, false, false, null, MessageStatus.SENT, LocalDateTime.now(), LocalDateTime.now()),
+                new Message(conversation3, user1,  MessageType.TEXT, "mess3", "contentRickText_3", false, false, false, null, MessageStatus.SENT, LocalDateTime.now(), LocalDateTime.now()),
+                new Message(conversation4, user1,  MessageType.TEXT, "mess4", "contentRickText_4", false, false, false, null, MessageStatus.SENT, LocalDateTime.now(), LocalDateTime.now())
                 // Add more messages here if needed
         );
 
@@ -145,4 +155,4 @@ public class DatabaseInitializer implements CommandLineRunner {
 //        }
 
     }
-    }
+}

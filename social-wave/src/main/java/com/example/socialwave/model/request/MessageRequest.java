@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 
 public class MessageRequest {
 
-    Long conversation;
+    Conversation conversation;
 
 
     Long sender;

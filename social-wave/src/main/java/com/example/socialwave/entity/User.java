@@ -66,16 +66,6 @@ public class User extends BaseEntity {
 
     // Constructors, getters và setters
 
-    // Phương thức để thêm cuộc hội thoại cho người dùng
-    public void addConversation(Conversation conversation) {
-        this.conversations.add(conversation);
-        conversation.getUsers().add(this);
-    }
 
-    // Phương thức để xoá cuộc hội thoại khỏi người dùng
-    public void removeConversation(Conversation conversation) {
-        this.conversations.remove(conversation);
-        conversation.getUsers().remove(this);
-    }
 
 }

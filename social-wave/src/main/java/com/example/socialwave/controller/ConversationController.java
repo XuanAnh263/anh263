@@ -6,6 +6,7 @@ import com.example.socialwave.model.response.ConversationResponse;
 import com.example.socialwave.security.CustomUserDetails;
 import com.example.socialwave.service.AuthenticationService;
 import com.example.socialwave.service.ConversationService;
+import com.example.socialwave.statics.ConversationType;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/conversations")
@@ -38,9 +40,15 @@ public class ConversationController {
 
     @PostMapping
     public ResponseEntity<ConversationResponse> addConversation(@RequestBody ConversationRequest conversationRequest) {
+        ConversationType conversationType = conversationRequest.getType();
+        Set<Long> userIds = conversationRequest.getUserIds();
 
-        ConversationResponse newConversation = conversationService.addConversation(conversationRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newConversation);
+        ConversationResponse newConversation = conversationService.addConversation(conversationRequest, conversationType, userIds);
+        if (newConversation != null) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(newConversation);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
     private CustomUserDetails getAuthenticatedUserFromSecurityContextHolder() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

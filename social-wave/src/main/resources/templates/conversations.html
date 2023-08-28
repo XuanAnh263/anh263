@@ -2,217 +2,56 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org"
       th:replace="layout/layout :: main-fragment(~{:: title}, ~{}, ~{:: .layout }, ~{:: #js})">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, shrink-to-fit=no">
-        <title>Messenger</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1, shrink-to-fit=no">
+    <title>Messenger</title>
 
-    <body>
+</head>
+
+<body>
 <!--    TODO render lại cả trang-->
-        <div class="layout" id="conversation-content" style="visibility: hidden" >
+<div class="layout" id="conversation-content" style="visibility: hidden">
 
-            <!-- nav -->
-            <th:block th:replace="fragments/nav :: nav"></th:block>
-
-
-            <!-- Sidebar -->
-            <th:block th:replace="fragments/nav-chat :: nav-chat"></th:block>
+    <!-- nav -->
+    <th:block th:replace="fragments/nav :: nav"></th:block>
 
 
+    <!-- Sidebar -->
+    <th:block th:replace="fragments/nav-chat :: nav-chat"></th:block>
 
-            <!-- Sidebar -->
 
-            <!-- Main Content -->
-            <div class="main" data-mobile-height="">
+    <!-- Sidebar -->
 
-                <!-- Default Page -->
-                <div class="chat flex-column justify-content-center text-center">
-                    <div class="container-xxl">
+    <!-- Main Content -->
+    <div class="main" data-mobile-height="">
 
-                        <div class="avatar avatar-lg mb-5">
-                            <img class="avatar-img" th:src="@{/assets/images/avatars/12.jpg}" alt="">
-                        </div>
+        <!-- Default Page -->
+        <div class="chat flex-column justify-content-center text-center">
+            <div class="container-xxl">
 
-                        <h6>Hey, Matthew!</h6>
-                        <p>Please select a chat to start messaging.</p>
-                    </div>
+                <div class="avatar avatar-lg mb-5">
+                    <img class="avatar-img" th:src="@{/assets/images/avatars/12.jpg}" alt="">
                 </div>
-                <!-- Default Page -->
 
+                <h6>Hey, Matthew!</h6>
+                <p>Please select a chat to start messaging.</p>
             </div>
-            <!-- Main Content -->
-
         </div>
-        <!-- Layout -->
+        <!-- Default Page -->
 
-        <th:block th:replace="fragments/dropzone :: dropzone"></th:block>
+    </div>
+    <!-- Main Content -->
 
-    </body>
+</div>
+<!-- Layout -->
 
-    <th:block id="js">
-        <script>
-            function getConversations() {
-                let jwtToken = localStorage.getItem("jwtToken");
+<th:block th:replace="fragments/dropzone :: dropzone"></th:block>
 
-                if (jwtToken) {
-                    $.ajax({
-                        url: "/api/v1/conversations",
-                        type: "GET",
-                        beforeSend: function (xhr) {
-                            xhr.setRequestHeader("Authorization", "Bearer " + jwtToken);
-                        },
-                        success: function (data) {
-                            updateConversationList(data);
-                            document.getElementById("conversation-content").style.visibility = "visible";
-                        },
-                        error: function () {
-                            toastr.error("Error while fetching conversations!");
-                        }
-                    });
-                } else {
-                    toastr.warning("Please log in again!");
-                    document.getElementById("conversation-content").style.visibility = "hidden";
-                    window.location.href = 'http://localhost:8080/signin';
-                }
-            }
-            // Hàm để cập nhật danh sách cuộc trò chuyện trong thẻ nav
-            function updateConversationList(conversations) {
-                let conversationList = $("#conversationList");
-                // conversationList.empty();
-                conversations.forEach(function (conversation) {
-                    let chatLink = `
-      <a class="conversation-link text-reset nav-link p-0 mb-6" href="#" data-conversation-id="${conversation.id}">
-        <div class="card card-active-listener">
-          <div class="card-body">
-            <div class="media">
-              <div class="avatar mr-5">
-                <img class="avatar-img" src="${conversation.avatar}" alt="Avatar">
-              </div>
-              <div class="media-body overflow-hidden">
-                <div class="d-flex align-items-center mb-1">
-                    <h6 class="text-truncate mb-0 mr-auto">${conversation.name}</h6>
-                    <p class="small text-muted text-nowrap ml-4">${conversation.lastModifiDateTime}</p>
-                </div>
-                <div class="text-truncate">${conversation.description}</div>
-              </div>
-            </div>
-          </div>
-          <div class="badge badge-circle badge-primary badge-border-light badge-top-right">
-            <span>3</span>
-          </div>
-        </div>
+</body>
 
-      </a>
-    `;
-                    let chatLinkElement = $(chatLink);
-                    conversationList.append(chatLinkElement);
-                });
-                conversationList.find("a.conversation-link").on("click", function (event) {
-                    event.preventDefault(); // Ngăn chặn việc chuyển hướng ngầm của thẻ a
-                    const conversationId = $(this).data("conversation-id");
+<th:block id="js">
 
-                    getMessagesInConversation(conversationId);
-                    // Chuyển hướng đến trang chat.html cùng với conversationId trong URL
-                    window.location.href = `chat?id=${conversationId}`;
-                });
-            }
-
-
-            $(document).ready(function () {
-                getConversations();
-
-            });
-
-
-
-        <!--  MESSAGE-->
-
-
-            function getMessagesInConversation(conversationId) {
-                let jwtToken = localStorage.getItem("jwtToken");
-                if (jwtToken) {
-                    console.log(conversationId);
-                    $.ajax({
-                        url: `/api/v1/messages/${conversationId}`,
-                        type: "GET",
-                        beforeSend: function (xhr) {
-                            xhr.setRequestHeader("Authorization", "Bearer " + jwtToken);
-                        },
-                        success: function (data) {
-                            console.log(data);
-                            updateMessageList(data);
-
-                            document.getElementById("conversation-content").style.visibility = "visible";
-                        },
-                        error: function () {
-                            toastr.error("Error while fetching messages!");
-                        }
-                    });
-                } else {
-                    toastr.warning("Please log in again!");
-                    document.getElementById("conversation-content").style.visibility = "hidden";
-                    window.location.href = 'http://localhost:8080/signin';
-
-                }
-
-            }
-
-            function updateMessageList(messages) {
-                let messageList = $("#chatContainer");
-                // messageList.empty();
-                messages.forEach(function (message) {
-                    let messageHtml = `
-        <div class="message">
-          <a class="avatar avatar-sm mr-4 mr-lg-5" href="#" data-chat-sidebar-toggle="#chat-2-info">
-            <img class="avatar-img" src="assets/images/avatars/10.jpg" alt="">
-          </a>
-          <div class="message-body">
-            <div class="message-row">
-              <div class="d-flex align-items-center">
-                <div class="message-content bg-light">
-                  <h6 class="mb-2">${message.sender}</h6>
-                  <div>${message.contentText}</div>
-                  <div class="mt-1">
-                    <small class="opacity-65">${message.creatDateTime}</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-                    // if (message.isTyping) {
-                    //   let messageHtml = `
-                    //   <div class="message">
-                    //     <a class="avatar avatar-sm mr-4 mr-lg-5" href="#" data-chat-sidebar-toggle="#chat-2-info">
-                    //       <img class="avatar-img" src="assets/images/avatars/10.jpg" alt="">
-                    //     </a>
-                    //     <div class="message-body">
-                    //       <div class="message-row">
-                    //         <div class="d-flex align-items-center">
-                    //           <div class="message-content bg-light">
-                    //             <div>Anna is typing<span class="typing-dots"><span>.</span><span>.</span><span>.</span></span></div>
-                    //           </div>
-                    //         </div>
-                    //       </div>
-                    //     </div>
-                    //   </div>
-                    // `;
-                    // }
-                    messageList.append(messageHtml);
-                });
-            }
-            $(document).ready(function () {
-
-                getMessagesInConversation();
-
-            });
-
-
-
-
-
-        </script>
-    </th:block>
+</th:block>
 </html>

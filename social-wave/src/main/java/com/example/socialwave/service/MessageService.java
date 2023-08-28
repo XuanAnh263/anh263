@@ -82,11 +82,11 @@ public class MessageService {
         return conversationRepository.findById(conversationId)
                 .orElseThrow(() -> new NotFoundException("Conversation not found"));
     }
-    @Transactional
+
     public MessageResponse createMessage(MessageRequest messageRequest, CustomUserDetails authenticatedUser) {
         try {
             Message message = new Message();
-            Long conversationId = messageRequest.getConversation();
+            Long conversationId = messageRequest.getConversation().getId();
             Conversation conversation = getConversationById(conversationId);
 
             message.setConversation(conversation);

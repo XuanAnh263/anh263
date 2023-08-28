@@ -78,6 +78,7 @@ public class AuthenticationController {
                 .username(userDetails.getUsername())
 //                .role("USER")
                 .build();
+//        setcooki TODO
     }
 
     @PostMapping("/signup")
@@ -101,6 +102,7 @@ public class AuthenticationController {
 
     @PostMapping("/logout")
     public ResponseEntity<?> logout() {
+//        TODO cooki
         userService.logout();
         return ResponseEntity.ok(null);
     }

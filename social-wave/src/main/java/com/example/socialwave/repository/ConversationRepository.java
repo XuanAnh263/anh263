@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ConversationRepository extends JpaRepository<Conversation, Long> {
     List<Conversation> findByOwnerId(Long ownerId);
+
 }
