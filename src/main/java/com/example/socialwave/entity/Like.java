@@ -1,37 +1,40 @@
 package com.example.socialwave.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
-@Builder
-@ToString
-@Entity
-@Table(name = "likes")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@ToString
+@Entity
+@Table(name = "tbl_like")
 public class Like {
     @Id
+    @Column(name ="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Integer id;
 
-    @ManyToOne(targetEntity = Post.class)
-            @JoinColumn(name = "post_id")
-    Post post;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private  User peopleLikeId;
 
-    @ManyToOne(targetEntity = User.class)
-            @JoinColumn(name = "user_id")
-    User user;
 
-    @ManyToOne(targetEntity = Comment.class)
-            @JoinColumn(name = "comment_id")
-    Comment comment;
 
-    @CreatedDate
-    LocalDateTime creatDateTime;
+    @Column(name ="updated")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updated;
+
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Post likePost;
 }

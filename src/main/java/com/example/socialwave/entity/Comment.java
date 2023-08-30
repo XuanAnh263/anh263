@@ -1,50 +1,49 @@
 package com.example.socialwave.entity;
 
-
-import com.example.socialwave.statics.CommentStatus;
-import com.example.socialwave.statics.CommentType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.CreatedDate;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Data
-@Builder
-@ToString
-@Entity
-@Table(name = "Comments")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@ToString
+@Entity
+@Table(name = "comment")
 public class Comment {
+
     @Id
+    @Column(name ="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Integer id;
 
-    @ManyToOne(targetEntity = Post.class)
-            @JoinColumn(name = "post_id")
-    Post post;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private User user;
 
-    @ManyToOne(targetEntity = User.class)
-            @JoinColumn(name = "user_id")
-    User user;
 
-    @Column(name = "type")
-    @Enumerated(EnumType.STRING)
-    CommentType type;
-
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    CommentStatus status;
 
     @Column(name = "content")
-    String content;
+    private String content;
 
-    @Column(name = "reply_to_comment_id")
-    Long replyToCommentId;
+    @Column(name ="updated")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updated;
 
-    @CreatedDate
-    LocalDateTime creatDateTime;
+    @Column(name ="created")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime created;
+
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Post post;
+
+
 }

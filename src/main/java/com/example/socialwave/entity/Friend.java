@@ -1,40 +1,42 @@
 package com.example.socialwave.entity;
 
-import com.example.socialwave.statics.FriendStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
-@Data
-@Builder
-@ToString
-@Entity
-@Table(name = "friends")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
-public class Friend {
+@ToString
+@Entity
+@Table(name = "friend")
+public class Friend   implements Serializable {
     @Id
+    @Column(name ="fid")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    public int id;
 
-    @ManyToOne(targetEntity = User.class)
-            @JoinColumn(name = "user_id")
-    User userId;
 
-    @ManyToOne(targetEntity = User.class)
-            @JoinColumn(name = "friend_id")
-    User friendId;
+    @JoinColumn(name = "user_a", nullable = false, updatable = false)
+    @ManyToOne(optional = false)
+    public User userA;
 
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    FriendStatus status;
 
-    public Friend(User userId, User friendId, FriendStatus status) {
-        this.userId = userId;
-        this.friendId = friendId;
-        this.status = status;
+    @JoinColumn(name = "user_b", nullable = false, updatable = false)
+    @ManyToOne(optional = false)
+    public User userB;
+
+
+    @Column(name ="created")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime created;
+
+    @Column(name = "state")
+    private String state;
+
     }
 
-}

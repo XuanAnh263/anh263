@@ -1,51 +1,116 @@
 package com.example.socialwave.model.request;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.experimental.FieldDefaults;
-import org.hibernate.validator.constraints.Length;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.validation.constraints.*;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class CreateUserRequest {
 
-    @Email(message = "Invalid email format")
-            @NotBlank(message = "Email existed")
-    String email;
+    @ApiModelProperty(
+            example="thaimeo",
+            notes="Username cannot be empty",
+            required=true
+    )
+    @JsonProperty("phone_number")
+    private String phoneNumber;
 
-    @NotBlank(message = "User password cannot be blank")
-            @Size(min = 6, message = "Password must be at least 6 characters ")
-    String password;
+    @ApiModelProperty(
+            example="123456",
+            notes="password cannot be empty",
+            required=true
+    )
+    @JsonProperty("password")
+    private String password;
 
-    @NotBlank(message = "Username is required")
-            @Length(max = 50, message = "FullName cannot exceed 50 characters")
-    String username;
+    @ApiModelProperty(
+            example="Da",
+            notes="First name cannot be empty",
+            required=true
+    )
+    @JsonProperty("first_name")
+    private String  firstName;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-            @NotNull(message = "Date cannot be blank")
-            @PastOrPresent(message = "Date should be less than current date")
-    LocalDate dob;
 
-    @NotBlank(message = "Gender user cannot be blank")
-    String gender;
+    @ApiModelProperty(
+            example="Th",
+            notes="Last name cannot be empty",
+            required=true
+    )
+    @JsonProperty("last_name")
+    private String lastName;
 
-    @NotBlank(message = "Avatar user cannot be blank")
-    String avatar;
+    @ApiModelProperty(
+            example="male",
+            notes="Gender cannot be empty , 1-Male , 2-Female",
+            required=true
+    )
+    @JsonProperty("gender")
+    private String gender;
 
-    @NotBlank(message = "Phone user cannot be blank")
-            @Pattern(regexp = "\\d{10}", message = "Phone must be 10 number characters")
-    String phone;
 
-    @Size(max = 255, message = "Address cannot over 255 characters")
-            @NotBlank(message = "User address cannot be blank")
-    String address;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    LocalDateTime deletedAt;
+    @ApiModelProperty(
+            example="1999-06-02T21:33:45.249967",
+            notes="Birth Date  cannot be empty",
+            required=true
+    )
+    @JsonProperty("dob")
+    private LocalDate dob;
+
+
+    @ApiModelProperty(
+            example="1999-06-02T21:33:45.249967",
+            notes="Joined Date  cannot be empty",
+            required=true
+    )
+    @JsonProperty("joined_date")
+    private LocalDateTime joinedDate;
+
+    @ApiModelProperty(
+            example="enable",
+
+            required=true
+    )
+    @JsonProperty("status")
+    private String status;
+
+    @ApiModelProperty(
+            example="user",
+            notes=" 1-ADMIN , 2-STAFF",
+            required=true
+    )
+    @JsonProperty("authority")
+    private String authority;
+
+//
+//    @ApiModelProperty(
+//            example="user",
+//            notes=" 1",
+//            required=true
+//    )
+//    @JsonProperty("user_id")
+//    private User user;
+
+
+
+
+    @ApiModelProperty(
+            example="user",
+            notes=" link",
+            required=true
+    )
+    @JsonProperty("link_avatar")
+    private String linkAvatar;
 
 }

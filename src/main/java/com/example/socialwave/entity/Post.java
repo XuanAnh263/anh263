@@ -1,45 +1,66 @@
 package com.example.socialwave.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import lombok.experimental.FieldDefaults;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Data
-@Builder
-@ToString
-@Entity
-@Table(name = "posts")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@ToString
+@Entity
+@Table(name = "post")
 public class Post {
     @Id
+    @Column(name ="id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Integer id;
 
-    @ManyToOne(targetEntity = User.class)
-            @JoinColumn(name = "user_id")
-    User user;
+    @Column(name = "content")
+    private String content;
 
-    @Column(name = "caption")
-    String caption;
+    @Column(name = "media")
+    private String media;
 
-    @Column(name = "content_media")
-    String contentMedia;
+    @Column(name ="updated")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime updated;
 
-    @Column(name = "like_count")
-    Long likeCount;
 
-    @Column(name = "comment_count")
-    Long commentCount;
+    @Column(name ="created")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime created;
 
-    @CreatedDate
-    LocalDateTime creatDateTime;
+    @Column(name ="number_of_likes")
+    private Integer numberOfLikes;
 
-    @LastModifiedDate
-    LocalDateTime lastModifiedDateTime;
+    @Column(name ="number_of_comments")
+    private Integer numberOfComments;
+
+
+    @ManyToOne
+    @JoinColumn(name = "author_id")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private User author;
+
+
+    @OneToMany(mappedBy = "post" ,cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<Comment> comments;
+
+
+    @OneToMany(mappedBy = "likePost" ,cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<Like> likes;
+
+
+
+
+
 }
