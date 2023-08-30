@@ -9,4 +9,4 @@ Spring WebSocket
 Springfox Swagger UI
 JSON Web Token
 Querydsl
-MySQL
+MySQLa
