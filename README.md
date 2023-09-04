@@ -12,9 +12,9 @@
 
 ### 2. API & Function
 
-|                | Method | API                                             | Function                                           |
+| Authentication | Method | API                                             | Function                                           |
 |----------------|--------|-------------------------------------------------|----------------------------------------------------|
-| Authentication | POST   | /api/v1/login                                   | Đăng nhập                                          |
+|                | POST   | /api/v1/login                                   | Đăng nhập                                          |
 | User           | POST   | /api/v1/users/signup                            | Đăng ký                                            |
 |                | PUT    | /api/v1/users/change-password                   | Quên mật khẩu                                      |
 |                | GET    | /api/v1/users/my-info                           | Hiển thị thông tin người dùng                      |
@@ -47,7 +47,7 @@
 |                | POST   | /api/v1/blockDiaryRequest/{userBId}             | Thực hiện chặn hoàn toàn người dùng                |
 |                |        |                                                 |                                                    |
 
-### 3. DATABASE
+
 
 
 
