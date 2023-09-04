@@ -16,7 +16,7 @@
 |----------------|--------|-------------------------------------------------|----------------------------------------------------|
 |                | POST   | /api/v1/login                                   | Đăng nhập                                          |
 | User           | POST   | /api/v1/users/signup                            | Đăng ký                                            |
-|                | PUT    | /api/v1/users/change-password                   | Quên mật khẩu                                      |
+|                | PUT    | /api/v1/users/change-password                   | Đổi mật khẩu                                       |
 |                | GET    | /api/v1/users/my-info                           | Hiển thị thông tin người dùng                      |
 |                | PUT    | /api/v1/users/{id}                              | Cập nhập thông tin người dùng                      |
 |                | GET    | /api/v1/users/{id}                              | Hiển thị người dùng                                |
