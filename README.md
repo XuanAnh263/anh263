@@ -1,4 +1,4 @@
-# 
+# SOCIAL - WAVE
 ### 1.Build with
 
 * [Spring Boot](https://spring.io/projects/spring-boot)
