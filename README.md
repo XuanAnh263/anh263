@@ -12,9 +12,9 @@
 
 ### 2. API & Function
 
-| Authentication | Method | API                                             | Function                                           |
+|                | Method | API                                             | Function                                           |
 |----------------|--------|-------------------------------------------------|----------------------------------------------------|
-|                | POST   | /api/v1/login                                   | Đăng nhập                                          |
+| Authentication | POST   | /api/v1/login                                   | Đăng nhập                                          |
 | User           | POST   | /api/v1/users/signup                            | Đăng ký                                            |
 |                | PUT    | /api/v1/users/change-password                   | Đổi mật khẩu                                       |
 |                | GET    | /api/v1/users/my-info                           | Hiển thị thông tin người dùng                      |
